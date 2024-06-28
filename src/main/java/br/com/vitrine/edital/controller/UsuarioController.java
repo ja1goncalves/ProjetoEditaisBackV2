@@ -50,4 +50,10 @@ public class UsuarioController {
         return ResponseEntity.ok().body(usuarioService.getAll());
     }
 
+    @PostMapping(value = "/login")
+    public ResponseEntity login(@RequestBody UsuarioDTO usuarioTO) {
+        usuarioService.login(usuarioTO);
+        return ResponseEntity.ok().build();
+    }
+
 }

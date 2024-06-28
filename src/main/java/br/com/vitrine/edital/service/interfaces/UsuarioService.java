@@ -15,4 +15,6 @@ public interface UsuarioService {
     void delete(Long idUsuario);
 
     List<UsuarioDTO> getAll();
+
+    void login(UsuarioDTO usuarioDTO);
 }
