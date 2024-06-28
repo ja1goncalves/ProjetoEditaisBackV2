@@ -1,6 +1,8 @@
 package br.com.vitrine.edital.service;
 
+import br.com.vitrine.edital.exception.DadoInvalidoException;
 import br.com.vitrine.edital.exception.NaoEncontradoException;
+import br.com.vitrine.edital.exception.RegistroExistenteException;
 import br.com.vitrine.edital.exception.UsuarioException;
 import br.com.vitrine.edital.model.dto.UsuarioDTO;
 import br.com.vitrine.edital.model.entity.Perfil;
@@ -8,6 +10,8 @@ import br.com.vitrine.edital.model.entity.Usuario;
 import br.com.vitrine.edital.repository.PerfilRepository;
 import br.com.vitrine.edital.repository.UsuarioRepository;
 import br.com.vitrine.edital.service.interfaces.UsuarioService;
+import br.com.vitrine.edital.utils.PasswordUtils;
+import br.com.vitrine.edital.utils.Utils;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -20,19 +24,30 @@ public class UsuarioServiceImpl implements UsuarioService {
 
     private final UsuarioRepository usuarioRepository;
     private final PerfilRepository perfilRepository;
+    private final PasswordUtils passwordUtils;
+    private final Utils utils;
 
-    public UsuarioServiceImpl(UsuarioRepository usuarioRepository, PerfilRepository perfilRepository) {
+    public UsuarioServiceImpl(UsuarioRepository usuarioRepository, PerfilRepository perfilRepository, PasswordUtils passwordUtils, Utils utils) {
         this.usuarioRepository = usuarioRepository;
         this.perfilRepository = perfilRepository;
+        this.passwordUtils = passwordUtils;
+        this.utils = utils;
     }
 
     @Override
     public UsuarioDTO create(UsuarioDTO usuarioDTO) {
         if (isNull(usuarioDTO)) {
-            throw new UsuarioException("Usuário enviado para cadastro inválido");
+            throw new DadoInvalidoException("Usuário enviado para cadastro inválido");
         }
 
+        if (!utils.isValidString(usuarioDTO.getLogin())) {
+            throw new DadoInvalidoException("Login do usuário está  inválido");
+        }
+
+        validateLogin(usuarioDTO.getLogin());
+
         usuarioDTO.setId(null);
+        usuarioDTO.setSenha(passwordUtils.encriptar(usuarioDTO.getSenha()));
         long idCriado = saveOrUpdate(usuarioDTO).getId();
         usuarioDTO.setId(idCriado);
 
@@ -55,7 +70,20 @@ public class UsuarioServiceImpl implements UsuarioService {
             throw new UsuarioException("Id do usuário está inválido: " + usuarioDTO.getId());
         }
 
-        Usuario usuario = saveOrUpdate(usuarioDTO);
+        Usuario usuario = getUsuarioOrThrow(usuarioDTO.getId());
+        if (utils.isValidString(usuarioDTO.getSenha())) {
+            usuarioDTO.setSenha(passwordUtils.encriptar(usuarioDTO.getSenha()));
+        } else {
+            usuarioDTO.setSenha(usuario.getSenha());
+        }
+
+        if (utils.isValidString(usuarioDTO.getLogin()) && !usuarioDTO.getLogin().equals(usuario.getLogin())) {
+            validateLogin(usuarioDTO.getLogin());
+        } else {
+            usuarioDTO.setLogin(usuario.getLogin());
+        }
+
+        usuario = saveOrUpdate(usuarioDTO);
         return new UsuarioDTO(usuario);
     }
 
@@ -73,10 +101,24 @@ public class UsuarioServiceImpl implements UsuarioService {
                 .collect(Collectors.toList());
     }
 
+    @Override
+    public void login(UsuarioDTO usuarioDTO) {
+        if (!utils.isValidString(usuarioDTO.getLogin()) || !utils.isValidString(usuarioDTO.getSenha())) {
+            throw new DadoInvalidoException("Login e/ou senha inválido(s)");
+        }
+
+        Usuario usuario = usuarioRepository
+                .findByLogin(usuarioDTO.getLogin())
+                .orElseThrow(() -> new NaoEncontradoException(String.format("Login '%s' não encontrado", usuarioDTO.getLogin())));
+
+        if (!passwordUtils.isHashValido(usuarioDTO.getSenha(), usuario.getSenha())) {
+            throw new DadoInvalidoException("Senha inválida");
+        }
+    }
+
     private Usuario saveOrUpdate(UsuarioDTO usuarioDTO) {
         Perfil perfil = getPerfilOrThrow(usuarioDTO.getIdPerfil());
-        Usuario usuario = new Usuario(usuarioDTO, perfil);
-        return usuarioRepository.save(usuario);
+        return usuarioRepository.save(new Usuario(usuarioDTO, perfil));
     }
 
     private Perfil getPerfilOrThrow(long idPerfil) {
@@ -90,4 +132,14 @@ public class UsuarioServiceImpl implements UsuarioService {
                 .findById(idUsuario)
                 .orElseThrow(() -> new NaoEncontradoException("Usuário não encontrado: " + idUsuario));
     }
+
+    private void validateLogin(String login) {
+        usuarioRepository
+                .findByLogin(login)
+                .ifPresent(__ -> {
+                    throw new RegistroExistenteException(String.format("Login '%s' já cadastrado para outro usuário.", login));
+                });
+    }
+
+
 }

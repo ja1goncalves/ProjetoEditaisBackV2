@@ -5,11 +5,11 @@ import jakarta.annotation.PostConstruct;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-public class ConfigInitiate {
+public class InitiateConfig {
 
     private final DBService dbService;
 
-    public ConfigInitiate(DBService dbService) {
+    public InitiateConfig(DBService dbService) {
         this.dbService = dbService;
     }
 

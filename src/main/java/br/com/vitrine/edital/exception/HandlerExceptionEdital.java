@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 public class HandlerExceptionEdital {
 
     @ExceptionHandler(UsuarioException.class)
-    public ResponseEntity<ResponseExceptionDTO> UsuarioException(UsuarioException ex, HttpServletRequest request) {
+    public ResponseEntity<ResponseExceptionDTO> handlerUsuarioException(UsuarioException ex, HttpServletRequest request) {
         return ResponseEntity
                 .status(HttpStatus.INTERNAL_SERVER_ERROR)
                 .body(getResponseError(request, HttpStatus.UNPROCESSABLE_ENTITY, ex));
@@ -21,17 +21,24 @@ public class HandlerExceptionEdital {
     }
 
     @ExceptionHandler(NaoEncontradoException.class)
-    public ResponseEntity<ResponseExceptionDTO> NaoEncontradoException(NaoEncontradoException ex, HttpServletRequest request) {
+    public ResponseEntity<ResponseExceptionDTO> handlerNaoEncontradoException(NaoEncontradoException ex, HttpServletRequest request) {
         return ResponseEntity
                 .status(HttpStatus.NOT_FOUND)
                 .body(getResponseError(request, HttpStatus.NOT_FOUND, ex));
     }
 
     @ExceptionHandler(RegistroExistenteException.class)
-    public ResponseEntity<ResponseExceptionDTO> RegistroExistenteException(RegistroExistenteException ex, HttpServletRequest request) {
+    public ResponseEntity<ResponseExceptionDTO> handlerRegistroExistenteException(RegistroExistenteException ex, HttpServletRequest request) {
         return ResponseEntity
                 .status(HttpStatus.CONFLICT)
                 .body(getResponseError(request, HttpStatus.CONFLICT, ex));
+    }
+
+    @ExceptionHandler(DadoInvalidoException.class)
+    public ResponseEntity<ResponseExceptionDTO> handlerDadoInvalidoException(DadoInvalidoException ex, HttpServletRequest request) {
+        return ResponseEntity
+                .status(HttpStatus.UNPROCESSABLE_ENTITY)
+                .body(getResponseError(request, HttpStatus.UNPROCESSABLE_ENTITY, ex));
     }
 
     @ExceptionHandler(value = Exception.class)
