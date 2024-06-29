@@ -28,6 +28,53 @@ Observações:
       - Descrever de forma clara (para um completo leigo) como executar esse projeto (de forma local), consequentemente (quando estiver aprovado) vamos disponibilizar online.
   - Ideias: https://ecossistema.pe/
 
+-----------
+### Procedimentos para executar o projeto local
+
+Este projeto é uma API que visa atender o Dashboard de Editais. O seu desenvolvimento foi realizado utilizando as seguintes tecnologias:
+
+- [Java 17](https://www.oracle.com/java/technologies/javase/jdk17-archive-downloads.html)
+- [Spring Boot 3.3.0](https://spring.io/projects/spring-boot) 
+- [Banco de dados H2 (Em memória para desenvolvimento)](https://www.h2database.com/html/main.html)
+- [Banco de dados MySQL (Para produção)](https://dev.mysql.com/downloads/mysql/)
+
+Para execução do projeto se faz necessário o download do Java 17, uma IDE como o [Intellij](https://www.jetbrains.com/idea/download/other.html), ou outra de sua preferência, e para execução em um banco de dados (Sem ser em memória) o MySQL.
+
+A sua IDE deverá apontar para o Java 17 baixado, se a mesma já não o tiver de forma embutida.
+
+No intellij o caminho é: Settings >> Build, Execution Deployment >> Compiler >> Java Compiler
+
+Em seguida realizar o download do projeto **ProjetoEditaisBack** do GitHub, e importá-lo em sua IDE apontando para o arquivo **pom.xml**.
+
+Após importar o projeto, aguarde as dependências serem baixadas, caso isso não ocorra, vá até a pasta do projeto por linha de comando e execute: **mvn clean install**.
+
+Após estes procedimentos é só executar o projeto para iniciar a API.
+
+No arquivo application.properties há a definição do provider apontando para o ambiente de desenvolvimento (dev) ou o ambiente de produção (prd), que está comentado(#):
+
+spring.profiles.active=dev
+
+#spring.profiles.active=prd
+
+Ao executar para o ambiente de desenvolvimento é possível visualizar os dados do banco através da URL: http://localhost:8081/edital/h2/login
+
+O banco de dados do projeto está com o nome: **upe-edital**.
+
+### API
+
+Porta: 8081 \
+Contexto: /edital
+
+Exemplo: http://localhost:8081/edital
+
+[UPE-Edital.postman_collection.json](..%2F..%2F..%2F..%2F..%2FDesktop%2FUPE-Edital.postman_collection.json)
+
+
+
+
+
+
+
 
 
 
