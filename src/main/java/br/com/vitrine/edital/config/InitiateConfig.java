@@ -14,8 +14,9 @@ public class InitiateConfig {
     }
 
     @PostConstruct
-    public void iniciaPerfis() {
+    public void iniciarDadosPadroes() {
         dbService.criarPerfis();
+        dbService.criarOrgaosDeFomento();
     }
 }
 

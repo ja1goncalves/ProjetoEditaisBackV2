@@ -2,7 +2,6 @@ package br.com.vitrine.edital.controller;
 
 import br.com.vitrine.edital.model.dto.UsuarioDTO;
 import br.com.vitrine.edital.service.interfaces.UsuarioService;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -10,7 +9,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@Slf4j
 @RequestMapping(path = "/usuario")
 public class UsuarioController {
 
@@ -35,7 +33,7 @@ public class UsuarioController {
     }
 
     @GetMapping(value = "/{id}")
-    public ResponseEntity recover(@PathVariable("id") Long idUsuario) {
+    public ResponseEntity<UsuarioDTO> recover(@PathVariable("id") Long idUsuario) {
         return ResponseEntity.ok().body(usuarioService.recover(idUsuario));
     }
 
