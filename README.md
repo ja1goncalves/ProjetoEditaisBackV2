@@ -58,8 +58,6 @@ spring.profiles.active=dev
 
 Ao executar para o ambiente de desenvolvimento é possível visualizar os dados do banco através da URL: http://localhost:8081/edital/h2/login
 
-O banco de dados do projeto está com o nome: **upe-edital**.
-
 ### API
 
 Porta: 8081 \
@@ -67,12 +65,14 @@ Contexto: /edital
 
 Exemplo: http://localhost:8081/edital
 
-[UPE-Edital.postman_collection.json](..%2F..%2F..%2F..%2F..%2FDesktop%2FUPE-Edital.postman_collection.json)
+[Endpoints (.json)](src/main/resources/collections_endpoints/UPE-Edital.postman_collection.json).
 
+### Banco de dados
 
+Nome do schema do banco de dados: **upe-edital**.
 
-
-
+Diagrama Entidade Relacionamento
+<img src="src/main/resources/db/DER.png" alt="Logo da Minha Empresa">
 
 
 
