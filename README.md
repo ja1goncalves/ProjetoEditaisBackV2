@@ -21,6 +21,7 @@ Plataforma WEB que seja possivel cadastrar Editais e Demonstrar esses editais:
     - https://www.secti.pe.gov.br/editais/
     - https://www.facepe.br/editais/todos/
     - http://memoria2.cnpq.br/web/guest/chamadas-publicas
+    - http://www.finep.gov.br/chamadas-publicas?situacao=aberta
    
 Observações:
   - Tecnologias não definidas -> Projeto vai ser continuado por bastante tempo, procurar tecnologias solidas para o desenvolvimento
