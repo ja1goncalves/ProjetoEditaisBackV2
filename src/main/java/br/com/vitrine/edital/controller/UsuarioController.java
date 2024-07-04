@@ -1,5 +1,6 @@
 package br.com.vitrine.edital.controller;
 
+import br.com.vitrine.edital.model.dto.CredencialDTO;
 import br.com.vitrine.edital.model.dto.ResponseExceptionDTO;
 import br.com.vitrine.edital.model.dto.UsuarioDTO;
 import br.com.vitrine.edital.service.interfaces.UsuarioService;
@@ -104,9 +105,8 @@ public class UsuarioController {
             @ApiResponse(responseCode = "422", content = {@Content(schema = @Schema(implementation = ResponseExceptionDTO.class), mediaType = "application/json")}),
             @ApiResponse(responseCode = "500", content = {@Content(schema = @Schema(implementation = ResponseExceptionDTO.class), mediaType = "application/json")})})
     @PostMapping(value = "/login")
-    public ResponseEntity login(@RequestBody UsuarioDTO usuarioTO) {
-        usuarioService.login(usuarioTO);
-        return ResponseEntity.ok().build();
+    public ResponseEntity<UsuarioDTO> login(@RequestBody CredencialDTO credencialDTO) {
+        return ResponseEntity.ok().body(usuarioService.login(credencialDTO));
     }
 
 

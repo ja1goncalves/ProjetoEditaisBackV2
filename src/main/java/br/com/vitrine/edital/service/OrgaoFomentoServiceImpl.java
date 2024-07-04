@@ -67,7 +67,7 @@ public class OrgaoFomentoServiceImpl implements OrgaoFomentoService {
 
     @Override
     public List<OrgaoFomentoDTO> getAll() {
-        return orgaoFomentoRepository.findAll()
+        return orgaoFomentoRepository.findAllByOrderByNomeAsc()
                 .stream()
                 .map(OrgaoFomentoDTO::new)
                 .collect(Collectors.toList());

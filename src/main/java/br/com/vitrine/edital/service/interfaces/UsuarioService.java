@@ -1,5 +1,6 @@
 package br.com.vitrine.edital.service.interfaces;
 
+import br.com.vitrine.edital.model.dto.CredencialDTO;
 import br.com.vitrine.edital.model.dto.UsuarioDTO;
 
 import java.util.List;
@@ -16,5 +17,5 @@ public interface UsuarioService {
 
     List<UsuarioDTO> getAll();
 
-    void login(UsuarioDTO usuarioDTO);
+    UsuarioDTO login(CredencialDTO credencialDTO);
 }

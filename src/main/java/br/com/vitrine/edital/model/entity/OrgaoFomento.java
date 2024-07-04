@@ -5,6 +5,8 @@ import br.com.vitrine.edital.model.dto.OrgaoFomentoDTO;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.Set;
+
 @Getter
 @Setter
 @Builder
@@ -26,6 +28,9 @@ public class OrgaoFomento {
     @EqualsAndHashCode.Include
     @Column(name = "nome", nullable = false)
     private String nome;
+
+    @OneToMany(mappedBy = "orgaoFomento", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Set<Edital> editais;
 
 
     public OrgaoFomento(OrgaoFomentoDTO orgaoFomentoDTO) {

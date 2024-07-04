@@ -4,6 +4,7 @@ import br.com.vitrine.edital.exception.DadoInvalidoException;
 import br.com.vitrine.edital.exception.NaoEncontradoException;
 import br.com.vitrine.edital.exception.RegistroExistenteException;
 import br.com.vitrine.edital.exception.UsuarioException;
+import br.com.vitrine.edital.model.dto.CredencialDTO;
 import br.com.vitrine.edital.model.dto.UsuarioDTO;
 import br.com.vitrine.edital.model.entity.Perfil;
 import br.com.vitrine.edital.model.entity.Usuario;
@@ -95,25 +96,27 @@ public class UsuarioServiceImpl implements UsuarioService {
 
     @Override
     public List<UsuarioDTO> getAll() {
-        return usuarioRepository.findAll()
+        return usuarioRepository.findAllByOrderByNomeAsc()
                 .stream()
                 .map(UsuarioDTO::new)
                 .collect(Collectors.toList());
     }
 
     @Override
-    public void login(UsuarioDTO usuarioDTO) {
-        if (!utils.isValidString(usuarioDTO.getLogin()) || !utils.isValidString(usuarioDTO.getSenha())) {
+    public UsuarioDTO login(CredencialDTO credencialDTO) {
+        if (!utils.isValidString(credencialDTO.getLogin()) || !utils.isValidString(credencialDTO.getSenha())) {
             throw new DadoInvalidoException("Login e/ou senha inválido(s)");
         }
 
         Usuario usuario = usuarioRepository
-                .findByLogin(usuarioDTO.getLogin())
-                .orElseThrow(() -> new NaoEncontradoException(String.format("Login '%s' não encontrado", usuarioDTO.getLogin())));
+                .findByLogin(credencialDTO.getLogin())
+                .orElseThrow(() -> new NaoEncontradoException(String.format("Login '%s' não encontrado", credencialDTO.getLogin())));
 
-        if (!passwordUtils.isHashValido(usuarioDTO.getSenha(), usuario.getSenha())) {
+        if (!passwordUtils.isHashValido(credencialDTO.getSenha(), usuario.getSenha())) {
             throw new DadoInvalidoException("Senha inválida");
         }
+
+        return new UsuarioDTO(usuario);
     }
 
     private Usuario saveOrUpdate(UsuarioDTO usuarioDTO) {
