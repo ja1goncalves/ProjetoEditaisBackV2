@@ -1,8 +1,6 @@
 package br.com.vitrine.edital.model.dto;
 
 import br.com.vitrine.edital.model.entity.Edital;
-import br.com.vitrine.edital.model.entity.OrgaoFomento;
-import br.com.vitrine.edital.model.entity.Usuario;
 import br.com.vitrine.edital.utils.DataUtils;
 import lombok.*;
 
@@ -47,7 +45,7 @@ public class EditalDTO implements Serializable {
 
     private boolean isCriadoPorBot;
 
-    public EditalDTO(Edital edital, Usuario usuario, OrgaoFomento orgaoFomento) {
+    public EditalDTO(Edital edital) {
         this.id = edital.getId();
         this.nome = edital.getNome();
         this.categoria = edital.getCategoria();
@@ -57,8 +55,8 @@ public class EditalDTO implements Serializable {
         this.dataInicial = nonNull(edital.getDataInicial()) ? DataUtils.formatarDataHora(edital.getDataInicial()) : "";
         this.dataFinal = nonNull(edital.getDataFinal()) ? DataUtils.formatarDataHora(edital.getDataFinal()) : "";
         this.resultado = edital.getResultado();
-        this.idUsuario = usuario.getId();
-        this.idOrgaoFomento = orgaoFomento.getId();
-        this.isCriadoPorBot = usuario.getLogin().equalsIgnoreCase("BOT");
+        this.idUsuario = edital.getUsuario().getId();
+        this.idOrgaoFomento = edital.getOrgaoFomento().getId();
+        this.isCriadoPorBot = edital.getUsuario().getLogin().equalsIgnoreCase("BOT");
     }
 }

@@ -57,16 +57,16 @@ spring.profiles.active=dev
 
 #spring.profiles.active=prd
 
-Ao executar para o ambiente de desenvolvimento é possível visualizar os dados do banco através da URL: http://localhost:8081/edital/h2/login
+Ao executar para o ambiente de desenvolvimento é possível visualizar os dados do banco através da URL: http://localhost:8081/upe/h2/login.jsp
 
 ### API
 
 Porta: 8081 \
-Contexto: /edital \
-Exemplo: http://localhost:8081/edital
+Contexto: /upe \
+Exemplo: http://localhost:8081/upe
 
 Documentação: _HOST_/**swagger-ui/index.html** \
-Exemplo: http://localhost:8081/edital/swagger-ui/index.html
+Exemplo: http://localhost:8081/upe/swagger-ui/index.html
 
 [Endpoints (.json)](src/main/resources/collections_endpoints/UPE-Edital.postman_collection.json).
 
