@@ -4,6 +4,8 @@ import br.com.vitrine.edital.model.dto.UsuarioDTO;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.Set;
+
 @Getter
 @Setter
 @Builder
@@ -33,6 +35,12 @@ public class Usuario {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ID_PERFIL", nullable = false, referencedColumnName = "ID")
     private Perfil perfil;
+
+    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Set<PreProjeto> preProjetos;
+
+    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Set<Edital> editais;
 
     public Usuario(UsuarioDTO usuarioDTO, Perfil perfil) {
         this.id = usuarioDTO.getId();
