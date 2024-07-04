@@ -15,7 +15,7 @@ public class HandlerExceptionEdital {
     @ExceptionHandler(UsuarioException.class)
     public ResponseEntity<ResponseExceptionDTO> handlerUsuarioException(UsuarioException ex, HttpServletRequest request) {
         return ResponseEntity
-                .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .status(HttpStatus.UNPROCESSABLE_ENTITY)
                 .body(getResponseError(request, HttpStatus.UNPROCESSABLE_ENTITY, ex));
 
     }

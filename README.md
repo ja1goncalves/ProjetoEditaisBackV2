@@ -62,9 +62,11 @@ Ao executar para o ambiente de desenvolvimento é possível visualizar os dados 
 ### API
 
 Porta: 8081 \
-Contexto: /edital
-
+Contexto: /edital \
 Exemplo: http://localhost:8081/edital
+
+Documentação: _HOST_/**swagger-ui/index.html** \
+Exemplo: http://localhost:8081/edital/swagger-ui/index.html
 
 [Endpoints (.json)](src/main/resources/collections_endpoints/UPE-Edital.postman_collection.json).
 
