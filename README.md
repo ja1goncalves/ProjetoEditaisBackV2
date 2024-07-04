@@ -75,7 +75,7 @@ Exemplo: http://localhost:8081/upe/swagger-ui/index.html
 Nome do schema do banco de dados: **upe-edital**.
 
 Diagrama Entidade Relacionamento
-<img src="src/main/resources/db/DER.png" alt="Logo da Minha Empresa">
+<img src="src/main/resources/db/DER_v2.png" alt="Modelo DER">
 
 
 
