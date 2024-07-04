@@ -76,9 +76,3 @@ Nome do schema do banco de dados: **upe-edital**.
 
 Diagrama Entidade Relacionamento
 <img src="src/main/resources/db/DER_v2.png" alt="Modelo DER">
-
-
-
-
-
-
