@@ -6,6 +6,7 @@ import br.com.vitrine.edital.model.entity.Usuario;
 import br.com.vitrine.edital.repository.OrgaoFomentoRepository;
 import br.com.vitrine.edital.repository.PerfilRepository;
 import br.com.vitrine.edital.repository.UsuarioRepository;
+import br.com.vitrine.edital.utils.PasswordUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
@@ -16,11 +17,13 @@ public class DBService {
     private final PerfilRepository perfilRepository;
     private final OrgaoFomentoRepository orgaoFomentoRepository;
     private final UsuarioRepository usuarioRepository;
+    private final PasswordUtils passwordUtils;
 
-    public DBService(PerfilRepository perfilRepository, OrgaoFomentoRepository orgaoFomentoRepository, UsuarioRepository usuarioRepository) {
+    public DBService(PerfilRepository perfilRepository, OrgaoFomentoRepository orgaoFomentoRepository, UsuarioRepository usuarioRepository, PasswordUtils passwordUtils) {
         this.perfilRepository = perfilRepository;
         this.orgaoFomentoRepository = orgaoFomentoRepository;
         this.usuarioRepository = usuarioRepository;
+        this.passwordUtils = passwordUtils;
     }
 
     public void criarPerfis() {
@@ -47,7 +50,7 @@ public class DBService {
             Usuario usuario = Usuario.builder()
                     .nome("Bot")
                     .login("bot")
-                    .senha("")
+                    .senha(passwordUtils.encriptar("12345678"))
                     .perfil(perfil)
                     .build();
 
