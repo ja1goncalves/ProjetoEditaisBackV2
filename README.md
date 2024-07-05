@@ -54,7 +54,6 @@ Após estes procedimentos é só executar o projeto para iniciar a API.
 No arquivo application.properties há a definição do provider apontando para o ambiente de desenvolvimento (dev) ou o ambiente de produção (prd), que está comentado(#):
 
 spring.profiles.active=dev
-
 #spring.profiles.active=prd
 
 Ao executar para o ambiente de desenvolvimento é possível visualizar os dados do banco através da URL: http://localhost:8081/upe/h2/login.jsp
@@ -68,11 +67,12 @@ Exemplo: http://localhost:8081/upe
 Documentação: _HOST_/**swagger-ui/index.html** \
 Exemplo: http://localhost:8081/upe/swagger-ui/index.html
 
-[Endpoints (.json)](src/main/resources/collections_endpoints/UPE-Edital.postman_collection.json).
+Coleção Postman: [Endpoints (.json)](src/main/resources/collections_endpoints/UPE-Edital_v2.postman_collection.json).
 
 ### Banco de dados
 
 Nome do schema do banco de dados: **upe-edital**.
 
-Diagrama Entidade Relacionamento
+Diagrama Entidade Relacionamento \
+
 <img src="src/main/resources/db/DER_v2.png" alt="Modelo DER">

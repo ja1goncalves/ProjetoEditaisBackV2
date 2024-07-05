@@ -1,0 +1,657 @@
+{
+	"info": {
+		"_postman_id": "ded80388-95b9-44a7-bca1-65f904f6d75a",
+		"name": "UPE-Edital",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "7997917"
+	},
+	"item": [
+		{
+			"name": "usuario",
+			"item": [
+				{
+					"name": "create",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nome\": \"Bot\",\r\n    \"login\": \"Bot\",\r\n    \"senha\": \"123\",\r\n    \"idPerfil\": 2\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8081/upe/usuario",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"upe",
+								"usuario"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"login\": \"fgp\",\r\n    \"senha\": \"123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8081/upe/usuario/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"upe",
+								"usuario",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": 4,\r\n    \"nome\": \"felipesss\",\r\n    \"login\": \"fgp\",\r\n    \"senha\": \"123\",\r\n    \"idPerfil\": 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8081/upe/usuario",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"upe",
+								"usuario"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getAll",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8081/upe/usuario",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"upe",
+								"usuario"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getById",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{    \r\n    \"name\": \"felipe\",\r\n    \"email\": \"teste@gmail.com\",\r\n    \"password\": \"123456\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8081/upe/usuario/4",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"upe",
+								"usuario",
+								"4"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getByLogin",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{    \r\n    \"name\": \"felipe\",\r\n    \"email\": \"teste@gmail.com\",\r\n    \"password\": \"123456\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8081/upe/usuario/login/fgp",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"upe",
+								"usuario",
+								"login",
+								"fgp"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{    \r\n    \"name\": \"felipe\",\r\n    \"email\": \"teste@gmail.com\",\r\n    \"password\": \"123456\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8081/upe/usuario/8",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"upe",
+								"usuario",
+								"8"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "edital",
+			"item": [
+				{
+					"name": "create",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nome\": \"edital 02\",\r\n    \"categoria\": \"fgp2\",\r\n    \"publicoAlvo\": \"Estudantes\",\r\n    \"area\": \"Tecnológia\",\r\n    \"dataPublicacao\": \"02/05/2024 07:00:00\",\r\n    \"dataInicial\": \"08/05/2024 08:00:00\",\r\n    \"dataFinal\": \"30/05/2024 23:59:59\",\r\n    \"resultado\": \"TESTE\",\r\n    \"idUsuario\": 11,\r\n    \"idOrgaoFomento\": 5\r\n\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8081/upe/edital",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"upe",
+								"edital"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": 4,\r\n    \"nome\": \"edital 05\",\r\n    \"categoria\": \"teste-cat\",\r\n    \"publicoAlvo\": \"Estudantes\",\r\n    \"area\": \"Tecnológia\",\r\n    \"dataPublicacao\": \"03/05/2024 01:00:00\",\r\n    \"dataInicial\": \"10/06/2024 08:00:00\",\r\n    \"dataFinal\": \"20/06/2024 23:59:59\",\r\n    \"resultado\": \"okk\",\r\n    \"idUsuario\": 7,\r\n    \"idOrgaoFomento\": 5,\r\n    \"criadoPorBot\": true\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8081/upe/edital",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"upe",
+								"edital"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getAll",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8081/upe/edital",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"upe",
+								"edital"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{    \r\n    \"name\": \"felipe\",\r\n    \"email\": \"teste@gmail.com\",\r\n    \"password\": \"123456\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8081/upe/edital/4",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"upe",
+								"edital",
+								"4"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{    \r\n    \"name\": \"felipe\",\r\n    \"email\": \"teste@gmail.com\",\r\n    \"password\": \"123456\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8081/upe/edital/4",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"upe",
+								"edital",
+								"4"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "inserirPdf",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "Bearer eyJjdHkiOiJKV1QiLCJlbmMiOiJBMTI4Q0JDLUhTMjU2IiwiYWxnIjoiZGlyIn0..T-in_8D8NPqvDNOi4QEz4A.JBrixrAiS9f8Q9I7QOp8uprQXbvMyP79gkpgug9bqTWebubq_kqaE9eNatbqejQHfzvUxvEUjbYb48w1mjkxZCVpr4V0pwD85eok3OjSJpZdWFS-RcfYs7fSK-bn9HI8Z77LE9_AKm0O6IHmzVtP8_nNsZl_b1icflk4OnOc8N6ebj8Nqp5XUE8KeuDLVyf3QfeU1FJq-zobupN7N2GG591NmqDQpm5A4bPGwPuoxO0defFUeg5Ac8cPJSYSB8GXwHO5BV7-ttaK3N_iV-tjeSf0rAWDt8BrFzx6OI89iT5_0CXtyR54Au5n2VHpNFRtfqqTio0mKFqHUasQ55KiJnzRF9zO4oBP_3qF-xhXx2-8i91RpyUgBtOiNz3Ze_6xMDDxQYYb7vrMEjPC3Z_TKe2zMNZm7xlU3G2Tv8Tz3jnbmXMo3cA6SHtuNzDYmD0JHWYoSWU1fGuxF6PYhizH2DOYbw-aX6Y3Rd9QN58Z_fO5AKVxGAoA064ddm77E1snexw5G0Z7ry5GFK0Te06vareLA423UPoAw80ZK3JxrBO9lvcosWVVF9qD3VP-uh0xnaA5wLZCDsdu1fPB9gkrQ8KkeccsQH3aeRr6UYGYBvAO5U9nM_Nj9JcV3pOI7srILtWvIPpIIfsxzIDMav6ncBmxsviisv4-En9PkXT1vRLlBaAK0yw8cQuYeEhjiNbcPALU7hB6tRMBXjp9yDqymgz1ta7e95K7FUHGuWkHeCGvvg7NCdy9Q_IpOLf1r3Xp4aPL8pow2GjSulgSu0qSRZH1p9yAG3krJ3WsXoNm3fM8I92ZICtLZr_3-hhUlDElaGY1fcz7_Lj--h3LIjKtmRbRcmPAGcZ0iise4XDvs9_U-He7eFaGxLNMXKQQuy0yJcIWpL4si9PywGVKX59Ob0aWZJS7OfhH3AikF2MN7jrbdpF9wgqGZKrDzzpe23hU5UYBB5NUhceo3MOSacJsRgpDY61fJRhsGaBqXhHEc_TV17fHDU6MEIERMf6AYSX3vczrzCUf7Odh57ERDHPb-LxqCiQThSy-4pb0r0oCY0WFk7cziJqxUwhX-GthuApn44ShzRaTloxxTUB1ptvon0_MHbCo-jJyk1I2oymHICSN3AuEQ0ZdNCJe0XwMI6GSJKHqYNizvioKErjWfC5kLKS5k03OL4VD2fnlL30-JkeOlwbHICufDnAHpm-U7vhpjVEgBxPdUO7JXbUIAaVjps5x9ajuaZH16gfWJO6wKQylOTCNwCBASgAR_EnttmmsHyH3GIQWjslrasZaBhG_Mns5yDYiyU2NMIbKAbvU2P4oa9THui9iTsXEvV_faDOahf7sxaASE7te7kId5OiHYHzMGPD3asgjsvPOkcRDxiL9QSVOgoHsyfgdNzJQGR6jtvTdLZ4XO0HgWAb8imFQkU0-VrP188V2GUvxXfg7eTc32e3FbipQjqWGADt6OkgnveHTdk1mjHY9c47oK9SouDJQwnP8_xZ-sA_wonM48ETrsxU-2bMhdYyVBZSbWMBb.eo0SbWwuS8TbQR9aGTtcIQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "edital_pdf",
+									"type": "file",
+									"src": "/C:/Users/Felipe/Downloads/11_02.pdf"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8081/upe/edital/inserir/1/pdf",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"upe",
+								"edital",
+								"inserir",
+								"1",
+								"pdf"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "obterPdf",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "Bearer eyJjdHkiOiJKV1QiLCJlbmMiOiJBMTI4Q0JDLUhTMjU2IiwiYWxnIjoiZGlyIn0..iN2dQR2Hd_RL3-WgDin3qg.iMBG58h8X6CPEdzhqSdLIMucDyvkCJIco_wLA6bNwJsXIGHnLtNey9h9f1ultntV4qREK2h79OfQeyWYHd9DagrhJZPO8bdc_KeXMr5Rz5D2L2pLe36v1E9Wguc8qZutT4cWGTGFlkoUK8OKb4R-dZknxXff8p0DC9JGoplIzgl2GGZlZs_k0G1E8l-nhhrnylx3uDFlyHgzFYtvm86j5aky_gHDwD-QiFTBIw90d0AEZzAFQl54QsKc-GaeK7rID26im6XguC2rZWlbtxSpL_NYaSSfHUbAQCE7QPj9PL2_FizZOtgnPRpSyrmC_NiSTwlRyxEs4SJPrzCVdHq6nOScSwQBBa41e69JAizRrMnytyg6K0W-by7H9WILG0GniY5Mo2aqWZW9-j3Jgtl_B4OZZyrOQOjtfPrBDXNN8vHyRSCyTrhpPSOSEL2t2V_NyX92lMBj6SART3IXpuRXx4QLbQYmMqqzuJpmX_VKfa3Tnn-yGo0CxGjTTNFbyX6PDcN5ss2qJ2VlWUdtffyNDZn9MHOk9CeC4zkHLsfdHJCS-HK-h7e4YvFFD46VXkIzuDdiEfn1guhIPz4lxLVeFeYPwH6Nbo7ClNoWeBFDg7-vH5AGzDv57fTVhdJkZvVXCTKWgv9QUBniImBs3HO6TTwhlnMnKD2SBIzszWhdeWABlqBOBcRE-2yQI8ft5xTMRs6dfvS4aKBks4Q1R_nZB3Ksn-giWHa9On7-9aK7CqTCdqsf2p_pGCR1W5D93F5egXmaCyNy9LVLQ0n8sMLXCtn9kT1zHQfhBox1bwjRbEs3h8DewTa4H0kO1PXh2lnSw3HOvgpJ0rSSw4A6A5xy22JXHNT0GfKQBmEtq52Dud2cHYDjToN0Jz1hV6mDBA0ROIg-N3aCscRPhToOzrmyBuu0tEnQW8hG8ahpjvdy3vKbcz1pBbf_f0WE3jTPc4he9mW-2M3bSum1mRCOkg0JfWAbyaiGUngHekDdC1ODb837O8aC5tdbJZKa6yx1tH-w7w_EM_HdcAdZ5jvhv5KrQV9ZxJExg8_q2rL39HOCuC0lEIbFnH4QCdy_L3ieI2im4X_jnkwvLYJzEkDaVkAhi0myV8Ckw6A4qxgyR6M8EMGvaAK_XEThDyFIDC6bSpe7jEI2iD99vLNFFMX5UpYdY5lf_rNBjCI7L8JD3TeaL-iAVHTZS62ZBTOFUJpeXI5ww5Rkx2jJ9HJD4P6KhLlqFXtdxGQHgZgs6RwaZsgUvAPOizZr5wPNaIK_UdAc8QWGpBMCLIJTyAYHFS-w4kdzublJYHU_1qafrJq-lUKLhMgmoOq2bG4qhdKe-5JKY8fP7DtVrUaBxbrIYPpTq5C3urhOPGLNW2N4PliFghBLl2sGSdm6QrQtQji8gDDunBjHaGJBJaq9uSN37m8Y96xKzoThaSIkNvIQ42EjKhXHHBRR5iucijk51RdHJ8KdzUmskpxNgmARRaoSEESTqoACCk6k3PIwiJjYex9FuUSS_rIydX7LHK4vSwaYvx9QHyC0.-HvCqf4FZby4hjndReF1qg",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8081/upe/edital/1/pdf",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"upe",
+								"edital",
+								"1",
+								"pdf"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "orgaoFomento",
+			"item": [
+				{
+					"name": "create",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nome\": \"abc\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8081/upe/orgaoFomento",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"upe",
+								"orgaoFomento"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": 1,\r\n    \"nome\": \"FACEPE\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8081/upe/orgaoFomento",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"upe",
+								"orgaoFomento"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getAll",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8081/upe/orgaoFomento",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"upe",
+								"orgaoFomento"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{    \r\n    \"name\": \"felipe\",\r\n    \"email\": \"teste@gmail.com\",\r\n    \"password\": \"123456\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8081/upe/orgaoFomento/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"upe",
+								"orgaoFomento",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getByName",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{    \r\n    \"name\": \"felipe\",\r\n    \"email\": \"teste@gmail.com\",\r\n    \"password\": \"123456\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8081/upe/orgaoFomento/nome/FinEP",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"upe",
+								"orgaoFomento",
+								"nome",
+								"FinEP"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{    \r\n    \"name\": \"felipe\",\r\n    \"email\": \"teste@gmail.com\",\r\n    \"password\": \"123456\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8081/upe/orgaoFomento/4",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"upe",
+								"orgaoFomento",
+								"4"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

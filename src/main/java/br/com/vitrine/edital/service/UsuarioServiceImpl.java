@@ -56,8 +56,14 @@ public class UsuarioServiceImpl implements UsuarioService {
     }
 
     @Override
-    public UsuarioDTO recover(Long idUsuario) {
+    public UsuarioDTO recoverById(Long idUsuario) {
         Usuario usuario = getUsuarioOrThrow(idUsuario);
+        return new UsuarioDTO(usuario);
+    }
+
+    @Override
+    public UsuarioDTO recoverByLogin(String login) {
+        Usuario usuario = getUsuarioOrThrow(login);
         return new UsuarioDTO(usuario);
     }
 
@@ -109,7 +115,7 @@ public class UsuarioServiceImpl implements UsuarioService {
         }
 
         Usuario usuario = usuarioRepository
-                .findByLogin(credencialDTO.getLogin())
+                .findByLoginIgnoreCase(credencialDTO.getLogin())
                 .orElseThrow(() -> new NaoEncontradoException(String.format("Login '%s' não encontrado", credencialDTO.getLogin())));
 
         if (!passwordUtils.isHashValido(credencialDTO.getSenha(), usuario.getSenha())) {
@@ -136,9 +142,15 @@ public class UsuarioServiceImpl implements UsuarioService {
                 .orElseThrow(() -> new NaoEncontradoException("Usuário não encontrado: " + idUsuario));
     }
 
+    private Usuario getUsuarioOrThrow(String login) {
+        return usuarioRepository
+                .findByLoginIgnoreCase(login)
+                .orElseThrow(() -> new NaoEncontradoException("Usuário não encontrado: " + login));
+    }
+
     private void validateLogin(String login) {
         usuarioRepository
-                .findByLogin(login)
+                .findByLoginIgnoreCase(login)
                 .ifPresent(__ -> {
                     throw new RegistroExistenteException(String.format("Login '%s' já cadastrado para outro usuário.", login));
                 });

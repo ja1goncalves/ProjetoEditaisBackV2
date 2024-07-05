@@ -3,6 +3,7 @@ package br.com.vitrine.edital.controller;
 import br.com.vitrine.edital.model.dto.EditalDTO;
 import br.com.vitrine.edital.model.dto.ResponseExceptionDTO;
 import br.com.vitrine.edital.service.interfaces.EditalService;
+import br.com.vitrine.edital.utils.Utils;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -10,9 +11,12 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -22,9 +26,11 @@ import java.util.List;
 public class EditalController {
 
     private final EditalService editalService;
+    private final Utils utils;
 
-    public EditalController(EditalService editalService) {
+    public EditalController(EditalService editalService, Utils utils) {
         this.editalService = editalService;
+        this.utils = utils;
     }
 
     @Operation(
@@ -41,6 +47,40 @@ public class EditalController {
                 .status(HttpStatus.CREATED)
                 .body(editalService.create(editalDTO));
 
+    }
+
+    @Operation(
+            summary = "Inserir o PDF do Edital",
+            description = "Este endpoint tem como objetivo inserir o PDF do edital através do seu ID.")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", content = {@Content(schema = @Schema())}),
+            @ApiResponse(responseCode = "404", content = {@Content(schema = @Schema(implementation = ResponseExceptionDTO.class), mediaType = "application/json")}),
+            @ApiResponse(responseCode = "500", content = {@Content(schema = @Schema(implementation = ResponseExceptionDTO.class), mediaType = "application/json")})})
+    @PostMapping(value = "/inserir/{idEdital}/pdf")
+    public ResponseEntity inserirPdf(@PathVariable("idEdital") Long idEdital, @RequestParam("edital_pdf") MultipartFile pdf) {
+        editalService.inserirPdf(idEdital, pdf);
+        return ResponseEntity.ok().build();
+    }
+
+    @Operation(
+            summary = "Obter o PDF do Edital",
+            description = "Este endpoint tem como objetivo obter o PDF do edital através do seu ID.")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", content = @Content(mediaType = MediaType.APPLICATION_OCTET_STREAM_VALUE,
+                    schema = @Schema(type = "string", format = "binary"))),
+            @ApiResponse(responseCode = "204", content = {@Content(schema = @Schema())}),
+            @ApiResponse(responseCode = "404", content = {@Content(schema = @Schema(implementation = ResponseExceptionDTO.class), mediaType = "application/json")}),
+            @ApiResponse(responseCode = "500", content = {@Content(schema = @Schema(implementation = ResponseExceptionDTO.class), mediaType = "application/json")})})
+    @GetMapping("/{idEdital}/pdf")
+    public ResponseEntity<byte[]> obterPdf(@PathVariable("idEdital") Long idEdital) {
+        byte[] pdf = editalService.recoverPdf(idEdital);
+        if (!utils.isValidByteArray(pdf)) {
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        }
+
+        String nomeArquivo = String.format("Edital_" + idEdital);
+        HttpHeaders header = getHeaderResponseStream(pdf.length, nomeArquivo);
+        return ResponseEntity.ok().headers(header).body(pdf);
     }
 
     @Operation(
@@ -92,6 +132,14 @@ public class EditalController {
     @GetMapping
     public ResponseEntity<List<EditalDTO>> getAll() {
         return ResponseEntity.ok().body(editalService.getAll());
+    }
+
+    private HttpHeaders getHeaderResponseStream(long tamanhoArquivo, String nomeArquivo) {
+        HttpHeaders header = new HttpHeaders();
+        header.setContentType(MediaType.APPLICATION_PDF);
+        header.setContentLength(tamanhoArquivo);
+        header.set("Content-Disposition", String.format("attachment; filename=%s.pdf", nomeArquivo));
+        return header;
     }
 
 

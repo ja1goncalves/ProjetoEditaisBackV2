@@ -2,6 +2,7 @@ package br.com.vitrine.edital.model.entity;
 
 
 import br.com.vitrine.edital.model.dto.OrgaoFomentoDTO;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -29,6 +30,7 @@ public class OrgaoFomento {
     @Column(name = "nome", nullable = false)
     private String nome;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "orgaoFomento", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<Edital> editais;
 

@@ -67,8 +67,20 @@ public class UsuarioController {
             @ApiResponse(responseCode = "404", content = {@Content(schema = @Schema(implementation = ResponseExceptionDTO.class), mediaType = "application/json")}),
             @ApiResponse(responseCode = "500", content = {@Content(schema = @Schema(implementation = ResponseExceptionDTO.class), mediaType = "application/json")})})
     @GetMapping(value = "/{id}")
-    public ResponseEntity<UsuarioDTO> recover(@PathVariable("id") Long idUsuario) {
-        return ResponseEntity.ok().body(usuarioService.recover(idUsuario));
+    public ResponseEntity<UsuarioDTO> recoverById(@PathVariable("id") Long idUsuario) {
+        return ResponseEntity.ok().body(usuarioService.recoverById(idUsuario));
+    }
+
+    @Operation(
+            summary = "Obter um usuário por Login",
+            description = "Este endpoint tem como objetivo obter um usuário através do seu Login.")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", content = {@Content(schema = @Schema(implementation = UsuarioDTO.class), mediaType = "application/json")}),
+            @ApiResponse(responseCode = "404", content = {@Content(schema = @Schema(implementation = ResponseExceptionDTO.class), mediaType = "application/json")}),
+            @ApiResponse(responseCode = "500", content = {@Content(schema = @Schema(implementation = ResponseExceptionDTO.class), mediaType = "application/json")})})
+    @GetMapping(value = "/login/{login}")
+    public ResponseEntity<UsuarioDTO> recoverByLogin(@PathVariable("login") String login) {
+        return ResponseEntity.ok().body(usuarioService.recoverByLogin(login));
     }
 
     @Operation(

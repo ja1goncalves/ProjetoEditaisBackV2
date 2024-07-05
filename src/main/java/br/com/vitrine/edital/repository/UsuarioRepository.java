@@ -8,7 +8,7 @@ import java.util.Optional;
 
 public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
 
-    Optional<Usuario> findByLogin(String login);
+    Optional<Usuario> findByLoginIgnoreCase(String login);
 
     List<Usuario> findAllByOrderByNomeAsc();
 

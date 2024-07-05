@@ -17,6 +17,7 @@ public class InitiateConfig {
     public void iniciarDadosPadroes() {
         dbService.criarPerfis();
         dbService.criarOrgaosDeFomento();
+        dbService.criarUsuarioBot();
     }
 }
 

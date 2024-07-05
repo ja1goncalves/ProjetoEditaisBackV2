@@ -17,6 +17,10 @@ public class Utils {
         return nonNull(number) && number != 0;
     }
 
+    public boolean isValidByteArray(byte[] arquivo) {
+        return nonNull(arquivo) && arquivo.length > 0;
+    }
+
     public boolean isValidCollection(Collection list) {
         return nonNull(list) && !list.isEmpty();
     }

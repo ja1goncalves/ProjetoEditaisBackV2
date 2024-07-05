@@ -14,7 +14,9 @@ import br.com.vitrine.edital.repository.UsuarioRepository;
 import br.com.vitrine.edital.service.interfaces.EditalService;
 import br.com.vitrine.edital.utils.Utils;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -59,9 +61,29 @@ public class EditalServiceImpl implements EditalService {
     }
 
     @Override
+    public void inserirPdf(Long idEdital, MultipartFile pdf) {
+        try {
+            validarPdf(pdf);
+            Edital edital = getEditalOrThrow(idEdital);
+            edital.setPdf(pdf.getBytes());
+            editalRepository.save(edital);
+
+        } catch (IOException e) {
+            throw new DadoInvalidoException("Erro ao inserir o PDF. " + e.getMessage());
+        }
+
+    }
+
+    @Override
     public EditalDTO recover(Long idEdital) {
         Edital edital = getEditalOrThrow(idEdital);
         return new EditalDTO(edital);
+    }
+
+    @Override
+    public byte[] recoverPdf(Long idEdital) {
+        Edital edital = getEditalOrThrow(idEdital);
+        return edital.getPdf();
     }
 
     @Override
@@ -131,6 +153,12 @@ public class EditalServiceImpl implements EditalService {
             if (!editalDTO.getNome().equalsIgnoreCase(edital.getNome())) {
                 validateNameEdital(editalDTO.getNome());
             }
+        }
+    }
+
+    private void validarPdf(MultipartFile logo) throws IOException {
+        if (isNull(logo) || logo.getBytes().length == 0) {
+            throw new DadoInvalidoException("PDF inválido.");
         }
     }
 }

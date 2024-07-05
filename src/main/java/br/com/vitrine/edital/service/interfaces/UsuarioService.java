@@ -9,7 +9,9 @@ public interface UsuarioService {
 
     UsuarioDTO create(UsuarioDTO usuarioDTO);
 
-    UsuarioDTO recover(Long idUsuario);
+    UsuarioDTO recoverById(Long idUsuario);
+
+    UsuarioDTO recoverByLogin(String login);
 
     UsuarioDTO update(UsuarioDTO usuarioDTO);
 
