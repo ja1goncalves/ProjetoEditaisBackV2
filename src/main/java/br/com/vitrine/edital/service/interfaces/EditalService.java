@@ -28,4 +28,6 @@ public interface EditalService {
     void desfavoritarEdital(Long idEdital, Long idUsuario);
 
     Set<UsuarioDTO> getUsuariosQueFavoritaram(Long idEdital);
+
+    List<EditalDTO> getEditalByUserFilterAndBot(Long idUsuario);
 }

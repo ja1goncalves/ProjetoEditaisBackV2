@@ -20,6 +20,7 @@ public interface EditalRepository extends JpaRepository<Edital, Long> {
     @Query("SELECT e.usuariosQueFavoritaram FROM Edital e WHERE e.id = :idEdital")
     Set<Usuario> findUsuariosQueFavoritaramByIdEdital(@Param("idEdital") Long idEdital);
 
-
+    @Query("SELECT e FROM Edital e WHERE e.usuario.id IN :ids ORDER BY LOWER(e.nome) ASC")
+    List<Edital> findByUsers(@Param("ids") List<Long> ids);
 
 }

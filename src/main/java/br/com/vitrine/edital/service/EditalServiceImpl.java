@@ -13,6 +13,7 @@ import br.com.vitrine.edital.repository.OrgaoFomentoRepository;
 import br.com.vitrine.edital.repository.PreProjetoRepository;
 import br.com.vitrine.edital.repository.UsuarioRepository;
 import br.com.vitrine.edital.service.interfaces.EditalService;
+import br.com.vitrine.edital.service.interfaces.UsuarioService;
 import br.com.vitrine.edital.utils.Utils;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -29,6 +30,7 @@ public class EditalServiceImpl implements EditalService {
 
     private final EditalRepository editalRepository;
     private final PreProjetoRepository preProjetoRepository;
+    private final UsuarioService usuarioService;
     private final UsuarioRepository usuarioRepository;
     private final OrgaoFomentoRepository orgaoFomentoRepository;
     private final Utils utils;
@@ -36,12 +38,14 @@ public class EditalServiceImpl implements EditalService {
     public EditalServiceImpl(
             EditalRepository editalRepository,
             PreProjetoRepository preProjetoRepository,
+            UsuarioService usuarioService,
             UsuarioRepository usuarioRepository,
             OrgaoFomentoRepository orgaoFomentoRepository,
             Utils utils) {
 
         this.editalRepository = editalRepository;
         this.preProjetoRepository = preProjetoRepository;
+        this.usuarioService = usuarioService;
         this.usuarioRepository = usuarioRepository;
         this.orgaoFomentoRepository = orgaoFomentoRepository;
         this.utils = utils;
@@ -141,6 +145,18 @@ public class EditalServiceImpl implements EditalService {
                 .stream()
                 .map(UsuarioDTO::new)
                 .collect(Collectors.toSet());
+    }
+
+    @Override
+    public List<EditalDTO> getEditalByUserFilterAndBot(Long idUsuario) {
+        getUsuarioOrThrow(idUsuario);
+        UsuarioDTO usuarioDTO = usuarioService.recoverByLogin("Bot");
+        List<Long> idsUsuarios = List.of(idUsuario, usuarioDTO.getId());
+
+        return editalRepository.findByUsers(idsUsuarios)
+                .stream()
+                .map(EditalDTO::new)
+                .collect(Collectors.toList());
     }
 
     private void validateNameEdital(String nome) {

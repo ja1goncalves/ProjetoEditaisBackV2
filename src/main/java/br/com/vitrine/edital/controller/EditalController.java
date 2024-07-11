@@ -175,6 +175,20 @@ public class EditalController {
         return ResponseEntity.ok(usuarios);
     }
 
+    @Operation(
+            summary = "Obter todos os editais por usuário",
+            description = "Este endpoint tem como objetivo obter todos os editais que foram criados pelo BOT e pelo usuário passado como parâmetro.")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", content = {@Content(array = @ArraySchema(schema = @Schema(implementation = EditalDTO.class)))}),
+            @ApiResponse(responseCode = "404", content = {@Content(schema = @Schema(implementation = ResponseExceptionDTO.class), mediaType = "application/json")}),
+            @ApiResponse(responseCode = "500", content = {@Content(schema = @Schema(implementation = ResponseExceptionDTO.class), mediaType = "application/json")})})
+    @GetMapping("/usuario/{idUsuario}")
+    public ResponseEntity<List<EditalDTO>> getEditaisPorUsuario(@PathVariable Long idUsuario) {
+        List<EditalDTO> editalDTOS = editalService.getEditalByUserFilterAndBot(idUsuario);
+        return ResponseEntity.ok(editalDTOS);
+    }
+
+
     private HttpHeaders getHeaderResponseStream(long tamanhoArquivo, String nomeArquivo) {
         HttpHeaders header = new HttpHeaders();
         header.setContentType(MediaType.APPLICATION_PDF);
