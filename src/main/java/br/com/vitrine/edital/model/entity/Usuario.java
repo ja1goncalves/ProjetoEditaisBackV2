@@ -42,6 +42,9 @@ public class Usuario {
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<Edital> editais;
 
+    @ManyToMany(mappedBy = "usuariosQueFavoritaram", fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    private Set<Edital> editaisFavoritos;
+
     public Usuario(UsuarioDTO usuarioDTO, Perfil perfil) {
         this.id = usuarioDTO.getId();
         this.login = usuarioDTO.getLogin();

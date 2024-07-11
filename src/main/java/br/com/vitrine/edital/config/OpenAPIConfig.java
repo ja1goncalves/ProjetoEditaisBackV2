@@ -24,6 +24,22 @@ public class OpenAPIConfig {
 
     @Bean
     public OpenAPI myOpenAPI() {
+        List<Server> servers = getServers();
+
+        Contact contact = new Contact();
+        contact.setName("UPE/POLI");
+        contact.setUrl("https://poli.br/");
+
+        Info info = new Info()
+                .title("API de Gerencimento de Editais")
+                .version("1.0.0")
+                .contact(contact)
+                .description("Esta API expõe os endpoints para o gerenciamentos da plataforma Dashboard de Editais");
+
+        return new OpenAPI().info(info).servers(servers);
+    }
+
+    private List<Server> getServers() {
         List<Server> servers = new ArrayList<>();
 
         Server devServer = new Server();
@@ -37,17 +53,6 @@ public class OpenAPIConfig {
             prodServer.setDescription("URL do servidor do ambiente de produção");
             servers.add(prodServer);
         }
-
-        Contact contact = new Contact();
-        contact.setName("PPGEC - UPE");
-        contact.setUrl("https://w2.solucaoatrio.net.br/somos/upe-ppgec/index.php/pt/");
-
-        Info info = new Info()
-                .title("API de Gerencimento de Editais")
-                .version("1.0.0")
-                .contact(contact)
-                .description("Esta API expõe os endpoints para o gerenciamentos da plataforma Dashboard de Editais");
-
-        return new OpenAPI().info(info).servers(servers);
+        return servers;
     }
 }

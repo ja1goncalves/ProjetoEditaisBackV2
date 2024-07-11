@@ -1,6 +1,7 @@
 package br.com.vitrine.edital.controller;
 
 import br.com.vitrine.edital.model.dto.CredencialDTO;
+import br.com.vitrine.edital.model.dto.EditalDTO;
 import br.com.vitrine.edital.model.dto.ResponseExceptionDTO;
 import br.com.vitrine.edital.model.dto.UsuarioDTO;
 import br.com.vitrine.edital.service.interfaces.UsuarioService;
@@ -16,6 +17,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Set;
 
 @Tag(name = "Usuário", description = "Gerencimento de Usuários")
 @RestController
@@ -119,6 +121,19 @@ public class UsuarioController {
     @PostMapping(value = "/login")
     public ResponseEntity<UsuarioDTO> login(@RequestBody CredencialDTO credencialDTO) {
         return ResponseEntity.ok().body(usuarioService.login(credencialDTO));
+    }
+
+    @Operation(
+            summary = "Obter todos os editais favoritados pelo usuário",
+            description = "Este endpoint tem como objetivo obter todos os editais favoritos do usuário consultado.")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", content = {@Content(array = @ArraySchema(schema = @Schema(implementation = EditalDTO.class)))}),
+            @ApiResponse(responseCode = "404", content = {@Content(schema = @Schema(implementation = ResponseExceptionDTO.class), mediaType = "application/json")}),
+            @ApiResponse(responseCode = "500", content = {@Content(schema = @Schema(implementation = ResponseExceptionDTO.class), mediaType = "application/json")})})
+    @GetMapping("/{idUsuario}/editais-favoritos")
+    public ResponseEntity<Set<EditalDTO>> getEditaisFavoritos(@PathVariable Long idUsuario) {
+        Set<EditalDTO> editais = usuarioService.getEditaisFavoritos(idUsuario);
+        return ResponseEntity.ok(editais);
     }
 
 

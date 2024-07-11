@@ -2,6 +2,7 @@ package br.com.vitrine.edital.controller;
 
 import br.com.vitrine.edital.model.dto.EditalDTO;
 import br.com.vitrine.edital.model.dto.ResponseExceptionDTO;
+import br.com.vitrine.edital.model.dto.UsuarioDTO;
 import br.com.vitrine.edital.service.interfaces.EditalService;
 import br.com.vitrine.edital.utils.Utils;
 import io.swagger.v3.oas.annotations.Operation;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+import java.util.Set;
 
 @Tag(name = "Edital", description = "Gerencimento de Editais")
 @RestController
@@ -66,8 +68,8 @@ public class EditalController {
             summary = "Obter o PDF do Edital",
             description = "Este endpoint tem como objetivo obter o PDF do edital através do seu ID.")
     @ApiResponses({
-            @ApiResponse(responseCode = "200", content = @Content(mediaType = MediaType.APPLICATION_OCTET_STREAM_VALUE,
-                    schema = @Schema(type = "string", format = "binary"))),
+            @ApiResponse(responseCode = "200", content = @Content(mediaType = MediaType.APPLICATION_OCTET_STREAM_VALUE
+            )),
             @ApiResponse(responseCode = "204", content = {@Content(schema = @Schema())}),
             @ApiResponse(responseCode = "404", content = {@Content(schema = @Schema(implementation = ResponseExceptionDTO.class), mediaType = "application/json")}),
             @ApiResponse(responseCode = "500", content = {@Content(schema = @Schema(implementation = ResponseExceptionDTO.class), mediaType = "application/json")})})
@@ -132,6 +134,45 @@ public class EditalController {
     @GetMapping
     public ResponseEntity<List<EditalDTO>> getAll() {
         return ResponseEntity.ok().body(editalService.getAll());
+    }
+
+    @Operation(
+            summary = "Favoritar um edital",
+            description = "Este endpoint tem como objetivo favoritar um edital pelo usuário, o adicionando da tabela EDITAL_FAVORITO.")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", content = {@Content(schema = @Schema())}),
+            @ApiResponse(responseCode = "404", content = {@Content(schema = @Schema(implementation = ResponseExceptionDTO.class), mediaType = "application/json")}),
+            @ApiResponse(responseCode = "500", content = {@Content(schema = @Schema(implementation = ResponseExceptionDTO.class), mediaType = "application/json")})})
+    @PostMapping(value = "/{idEdital}/usuario/{idUsuario}/favoritar")
+    public ResponseEntity favoritarEdital(@PathVariable("idEdital") Long idEdital, @PathVariable("idUsuario") Long idUsuario) {
+        editalService.favoritarEdital(idEdital, idUsuario);
+        return ResponseEntity.ok().build();
+    }
+
+    @Operation(
+            summary = "Desfavoritar um edital",
+            description = "Este endpoint tem como objetivo desfavoritar um edital pelo usuário, o removendo da tabela EDITAL_FAVORITO.")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", content = {@Content(schema = @Schema())}),
+            @ApiResponse(responseCode = "404", content = {@Content(schema = @Schema(implementation = ResponseExceptionDTO.class), mediaType = "application/json")}),
+            @ApiResponse(responseCode = "500", content = {@Content(schema = @Schema(implementation = ResponseExceptionDTO.class), mediaType = "application/json")})})
+    @DeleteMapping(value = "/{idEdital}/usuario/{idUsuario}/desfavoritar")
+    public ResponseEntity desfavoritarEdital(@PathVariable("idEdital") Long idEdital, @PathVariable("idUsuario") Long idUsuario) {
+        editalService.desfavoritarEdital(idEdital, idUsuario);
+        return ResponseEntity.ok().build();
+    }
+
+    @Operation(
+            summary = "Obter todos os usuários que favoritaram o edital",
+            description = "Este endpoint tem como objetivo obter todos os usuários que favoritaram o edital consultado.")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", content = {@Content(array = @ArraySchema(schema = @Schema(implementation = UsuarioDTO.class)))}),
+            @ApiResponse(responseCode = "404", content = {@Content(schema = @Schema(implementation = ResponseExceptionDTO.class), mediaType = "application/json")}),
+            @ApiResponse(responseCode = "500", content = {@Content(schema = @Schema(implementation = ResponseExceptionDTO.class), mediaType = "application/json")})})
+    @GetMapping("/{idEdital}/usuarios-que-favoritaram")
+    public ResponseEntity<Set<UsuarioDTO>> getUsuariosQueFavoritaram(@PathVariable Long idEdital) {
+        Set<UsuarioDTO> usuarios = editalService.getUsuariosQueFavoritaram(idEdital);
+        return ResponseEntity.ok(usuarios);
     }
 
     private HttpHeaders getHeaderResponseStream(long tamanhoArquivo, String nomeArquivo) {
