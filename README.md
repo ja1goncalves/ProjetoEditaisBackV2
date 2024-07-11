@@ -58,6 +58,13 @@ spring.profiles.active=dev
 
 Ao executar para o ambiente de desenvolvimento é possível visualizar os dados do banco através da URL: http://localhost:8081/upe/h2/login.jsp
 
+Se for executado para o ambiente de produção (_spring.profiles.active=prd_) os dados presentes no arquivo _application-prd.properties_ deverá refletir o banco em produção.
+Por padrão está: \
+Bando de dados: MySql \
+Schema: upe-edital \
+Usuário: root \
+Senha: root
+
 ### API
 
 Porta: 8081 \
@@ -67,12 +74,12 @@ Exemplo: http://localhost:8081/upe
 Documentação: _HOST_/**swagger-ui/index.html** \
 Exemplo: http://localhost:8081/upe/swagger-ui/index.html
 
-Coleção Postman: [Endpoints (.json)](src/main/resources/collections_endpoints/UPE-Edital_v2.postman_collection.json).
+Coleção Postman: [Endpoints (.json)](src/main/resources/collections_endpoints/UPE-Edital_v3.postman_collection.json).
 
 ### Banco de dados
 
 Nome do schema do banco de dados: **upe-edital**.
 
-Diagrama Entidade Relacionamento \
+Diagrama Entidade Relacionamento:
 
 <img src="src/main/resources/db/DER_v2.png" alt="Modelo DER">
