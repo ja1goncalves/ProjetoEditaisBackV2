@@ -1,9 +1,11 @@
 package br.com.vitrine.edital.service.interfaces;
 
 import br.com.vitrine.edital.model.dto.EditalDTO;
+import br.com.vitrine.edital.model.dto.UsuarioDTO;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+import java.util.Set;
 
 public interface EditalService {
 
@@ -24,4 +26,6 @@ public interface EditalService {
     void favoritarEdital(Long idEdital, Long idUsuario);
 
     void desfavoritarEdital(Long idEdital, Long idUsuario);
+
+    Set<UsuarioDTO> getUsuariosQueFavoritaram(Long idEdital);
 }

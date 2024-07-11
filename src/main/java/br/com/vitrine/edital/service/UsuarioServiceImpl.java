@@ -5,6 +5,7 @@ import br.com.vitrine.edital.exception.NaoEncontradoException;
 import br.com.vitrine.edital.exception.RegistroExistenteException;
 import br.com.vitrine.edital.exception.UsuarioException;
 import br.com.vitrine.edital.model.dto.CredencialDTO;
+import br.com.vitrine.edital.model.dto.EditalDTO;
 import br.com.vitrine.edital.model.dto.UsuarioDTO;
 import br.com.vitrine.edital.model.entity.Edital;
 import br.com.vitrine.edital.model.entity.Perfil;
@@ -17,6 +18,7 @@ import br.com.vitrine.edital.utils.Utils;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import static java.util.Objects.isNull;
@@ -132,6 +134,15 @@ public class UsuarioServiceImpl implements UsuarioService {
         }
 
         return new UsuarioDTO(usuario);
+    }
+
+    @Override
+    public Set<EditalDTO> getEditaisFavoritos(Long idUsuario) {
+        getUsuarioOrThrow(idUsuario);
+        return usuarioRepository.findEditaisFavoritosByUserId(idUsuario)
+                .stream()
+                .map(EditalDTO::new)
+                .collect(Collectors.toSet());
     }
 
     private Usuario saveOrUpdate(UsuarioDTO usuarioDTO) {

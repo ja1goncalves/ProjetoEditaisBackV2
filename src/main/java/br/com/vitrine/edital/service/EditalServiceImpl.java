@@ -4,6 +4,7 @@ import br.com.vitrine.edital.exception.DadoInvalidoException;
 import br.com.vitrine.edital.exception.NaoEncontradoException;
 import br.com.vitrine.edital.exception.RegistroExistenteException;
 import br.com.vitrine.edital.model.dto.EditalDTO;
+import br.com.vitrine.edital.model.dto.UsuarioDTO;
 import br.com.vitrine.edital.model.entity.Edital;
 import br.com.vitrine.edital.model.entity.OrgaoFomento;
 import br.com.vitrine.edital.model.entity.Usuario;
@@ -18,6 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import static java.util.Objects.isNull;
@@ -130,6 +132,15 @@ public class EditalServiceImpl implements EditalService {
         usuario.getEditaisFavoritos().remove(edital);
 
         editalRepository.save(edital);
+    }
+
+    @Override
+    public Set<UsuarioDTO> getUsuariosQueFavoritaram(Long idEdital) {
+        getEditalOrThrow(idEdital);
+        return editalRepository.findUsuariosQueFavoritaramByIdEdital(idEdital)
+                .stream()
+                .map(UsuarioDTO::new)
+                .collect(Collectors.toSet());
     }
 
     private void validateNameEdital(String nome) {
