@@ -6,6 +6,7 @@ import br.com.vitrine.edital.exception.RegistroExistenteException;
 import br.com.vitrine.edital.exception.UsuarioException;
 import br.com.vitrine.edital.model.dto.CredencialDTO;
 import br.com.vitrine.edital.model.dto.UsuarioDTO;
+import br.com.vitrine.edital.model.entity.Edital;
 import br.com.vitrine.edital.model.entity.Perfil;
 import br.com.vitrine.edital.model.entity.Usuario;
 import br.com.vitrine.edital.repository.PerfilRepository;
@@ -96,8 +97,16 @@ public class UsuarioServiceImpl implements UsuarioService {
 
     @Override
     public void delete(Long idUsuario) {
-        getUsuarioOrThrow(idUsuario);
-        usuarioRepository.deleteById(idUsuario);
+        Usuario usuario = getUsuarioOrThrow(idUsuario);
+
+        // Remover todas as associações com Editais da tabela EDITAL_FAVORITO
+        for (Edital edital : usuario.getEditaisFavoritos()) {
+            edital.getUsuariosQueFavoritaram().remove(usuario);
+        }
+        usuario.getEditaisFavoritos().clear();
+
+        // Agora é possivel remover o usuário sem problemas de integridade referencial
+        usuarioRepository.delete(usuario);
     }
 
     @Override

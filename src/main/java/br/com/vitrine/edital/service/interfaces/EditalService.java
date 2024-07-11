@@ -20,4 +20,8 @@ public interface EditalService {
     void delete(Long idEdital);
 
     List<EditalDTO> getAll();
+
+    void favoritarEdital(Long idEdital, Long idUsuario);
+
+    void desfavoritarEdital(Long idEdital, Long idUsuario);
 }

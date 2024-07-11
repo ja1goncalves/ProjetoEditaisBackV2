@@ -66,8 +66,8 @@ public class EditalController {
             summary = "Obter o PDF do Edital",
             description = "Este endpoint tem como objetivo obter o PDF do edital através do seu ID.")
     @ApiResponses({
-            @ApiResponse(responseCode = "200", content = @Content(mediaType = MediaType.APPLICATION_OCTET_STREAM_VALUE,
-                    schema = @Schema(type = "string", format = "binary"))),
+            @ApiResponse(responseCode = "200", content = @Content(mediaType = MediaType.APPLICATION_OCTET_STREAM_VALUE
+            )),
             @ApiResponse(responseCode = "204", content = {@Content(schema = @Schema())}),
             @ApiResponse(responseCode = "404", content = {@Content(schema = @Schema(implementation = ResponseExceptionDTO.class), mediaType = "application/json")}),
             @ApiResponse(responseCode = "500", content = {@Content(schema = @Schema(implementation = ResponseExceptionDTO.class), mediaType = "application/json")})})
@@ -133,6 +133,33 @@ public class EditalController {
     public ResponseEntity<List<EditalDTO>> getAll() {
         return ResponseEntity.ok().body(editalService.getAll());
     }
+
+    @Operation(
+            summary = "Favoritar um edital",
+            description = "Este endpoint tem como objetivo favoritar um edital pelo usuário, o adicionando da tabela EDITAL_FAVORITO.")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", content = {@Content(schema = @Schema())}),
+            @ApiResponse(responseCode = "404", content = {@Content(schema = @Schema(implementation = ResponseExceptionDTO.class), mediaType = "application/json")}),
+            @ApiResponse(responseCode = "500", content = {@Content(schema = @Schema(implementation = ResponseExceptionDTO.class), mediaType = "application/json")})})
+    @PostMapping(value = "/{idEdital}/usuario/{idUsuario}/favoritar")
+    public ResponseEntity favoritarEdital(@PathVariable("idEdital") Long idEdital, @PathVariable("idUsuario") Long idUsuario) {
+        editalService.favoritarEdital(idEdital, idUsuario);
+        return ResponseEntity.ok().build();
+    }
+
+    @Operation(
+            summary = "Desfavoritar um edital",
+            description = "Este endpoint tem como objetivo desfavoritar um edital pelo usuário, o removendo da tabela EDITAL_FAVORITO.")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", content = {@Content(schema = @Schema())}),
+            @ApiResponse(responseCode = "404", content = {@Content(schema = @Schema(implementation = ResponseExceptionDTO.class), mediaType = "application/json")}),
+            @ApiResponse(responseCode = "500", content = {@Content(schema = @Schema(implementation = ResponseExceptionDTO.class), mediaType = "application/json")})})
+    @DeleteMapping(value = "/{idEdital}/usuario/{idUsuario}/desfavoritar")
+    public ResponseEntity desfavoritarEdital(@PathVariable("idEdital") Long idEdital, @PathVariable("idUsuario") Long idUsuario) {
+        editalService.desfavoritarEdital(idEdital, idUsuario);
+        return ResponseEntity.ok().build();
+    }
+
 
     private HttpHeaders getHeaderResponseStream(long tamanhoArquivo, String nomeArquivo) {
         HttpHeaders header = new HttpHeaders();

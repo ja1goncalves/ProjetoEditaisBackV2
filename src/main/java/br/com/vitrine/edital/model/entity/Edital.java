@@ -62,6 +62,14 @@ public class Edital {
     @OneToMany(mappedBy = "edital", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<PreProjeto> preProjetos;
 
+    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinTable(
+            name = "EDITAL_FAVORITO",
+            joinColumns = @JoinColumn(name = "ID_EDITAL", referencedColumnName = "ID"),
+            inverseJoinColumns = @JoinColumn(name = "ID_USUARIO", referencedColumnName = "ID")
+    )
+    private Set<Usuario> usuariosQueFavoritaram;
+
     public Edital(EditalDTO editalDTO, Usuario usuario, OrgaoFomento orgaoFomento) {
         this.id = editalDTO.getId();
         this.nome = editalDTO.getNome();

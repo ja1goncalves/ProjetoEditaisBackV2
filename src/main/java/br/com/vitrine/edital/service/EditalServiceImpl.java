@@ -110,6 +110,28 @@ public class EditalServiceImpl implements EditalService {
                 .collect(Collectors.toList());
     }
 
+    @Override
+    public void favoritarEdital(Long idEdital, Long idUsuario) {
+        Edital edital = getEditalOrThrow(idEdital);
+        Usuario usuario = getUsuarioOrThrow(idUsuario);
+
+        edital.getUsuariosQueFavoritaram().add(usuario);
+        usuario.getEditaisFavoritos().add(edital);
+
+        editalRepository.save(edital);
+    }
+
+    @Override
+    public void desfavoritarEdital(Long idEdital, Long idUsuario) {
+        Edital edital = getEditalOrThrow(idEdital);
+        Usuario usuario = getUsuarioOrThrow(idUsuario);
+
+        edital.getUsuariosQueFavoritaram().remove(usuario);
+        usuario.getEditaisFavoritos().remove(edital);
+
+        editalRepository.save(edital);
+    }
+
     private void validateNameEdital(String nome) {
         editalRepository
                 .findByNome(nome)
