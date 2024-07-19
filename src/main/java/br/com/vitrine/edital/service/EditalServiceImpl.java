@@ -15,6 +15,7 @@ import br.com.vitrine.edital.repository.UsuarioRepository;
 import br.com.vitrine.edital.service.interfaces.EditalService;
 import br.com.vitrine.edital.service.interfaces.UsuarioService;
 import br.com.vitrine.edital.utils.Utils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -29,7 +30,6 @@ import static java.util.Objects.isNull;
 public class EditalServiceImpl implements EditalService {
 
     private final EditalRepository editalRepository;
-    private final PreProjetoRepository preProjetoRepository;
     private final UsuarioService usuarioService;
     private final UsuarioRepository usuarioRepository;
     private final OrgaoFomentoRepository orgaoFomentoRepository;
@@ -37,14 +37,12 @@ public class EditalServiceImpl implements EditalService {
 
     public EditalServiceImpl(
             EditalRepository editalRepository,
-            PreProjetoRepository preProjetoRepository,
             UsuarioService usuarioService,
             UsuarioRepository usuarioRepository,
             OrgaoFomentoRepository orgaoFomentoRepository,
             Utils utils) {
 
         this.editalRepository = editalRepository;
-        this.preProjetoRepository = preProjetoRepository;
         this.usuarioService = usuarioService;
         this.usuarioRepository = usuarioRepository;
         this.orgaoFomentoRepository = orgaoFomentoRepository;
@@ -79,7 +77,6 @@ public class EditalServiceImpl implements EditalService {
         }
 
     }
-
     @Override
     public EditalDTO recover(Long idEdital) {
         Edital edital = getEditalOrThrow(idEdital);
@@ -109,11 +106,11 @@ public class EditalServiceImpl implements EditalService {
     }
 
     @Override
-    public List<EditalDTO> getAll() {
-        return editalRepository.findAllByOrderByNomeAsc()
-                .stream()
-                .map(EditalDTO::new)
-                .collect(Collectors.toList());
+    public List<EditalDTO> getAll() {return editalRepository.findAllByOrderByNomeAsc()
+            .stream()
+            .map(EditalDTO::new)
+            .collect(Collectors.toList());
+
     }
 
     @Override

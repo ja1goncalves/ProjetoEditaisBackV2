@@ -30,4 +30,5 @@ public interface EditalService {
     Set<UsuarioDTO> getUsuariosQueFavoritaram(Long idEdital);
 
     List<EditalDTO> getEditalByUserFilterAndBot(Long idUsuario);
+
 }

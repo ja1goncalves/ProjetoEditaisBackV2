@@ -23,6 +23,10 @@ public class CorsConfig extends CorsFilter {
     public WebMvcConfigurer corsConfigurer() {
         return new WebMvcConfigurer() {
 
+            public void addCorsMappings() {
+                addCorsMappings(null);
+            }
+
             @Override
             public void addCorsMappings(CorsRegistry registry) {
                 CorsRegistration cors = registry.addMapping("/**");

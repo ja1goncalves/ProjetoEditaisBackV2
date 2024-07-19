@@ -20,14 +20,13 @@ public class PreProjetoDTO implements Serializable {
 
     @EqualsAndHashCode.Include
     private Long id;
-
     private Long idUsuario;
     private Long idEdital;
 
-    public PreProjetoDTO(PreProjeto preProjeto, Edital edital, Usuario usuario) {
+    public PreProjetoDTO(PreProjeto preProjeto) {
         this.id = preProjeto.getId();
-        this.idEdital = edital.getId();
-        this.idUsuario = usuario.getId();
+        this.idEdital = preProjeto.getEdital().getId();
+        this.idUsuario = preProjeto.getUsuario().getId();
     }
 
 }

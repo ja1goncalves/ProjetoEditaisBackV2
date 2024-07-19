@@ -25,24 +25,19 @@ public class PreProjeto {
     @Column(name = "PDF")
     private byte[] pdf;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "ID_USUARIO", nullable = false, referencedColumnName = "ID")
+    @ManyToOne
+    @JoinColumn(name = "usuario", nullable = false, referencedColumnName = "ID")
     private Usuario usuario;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "ID_EDITAL", nullable = false, referencedColumnName = "ID")
+    @JoinColumn(name = "edital", nullable = false, referencedColumnName = "ID")
     private Edital edital;
 
     public PreProjeto(PreProjetoDTO preProjetoDTO, Usuario usuario, Edital edital) {
         this.id = preProjetoDTO.getId();
         this.usuario = usuario;
         this.edital = edital;
-    }
 
-    public PreProjeto(PreProjetoDTO preProjetoDTO, Usuario usuario, Edital edital, byte[] pdf) {
-        this(preProjetoDTO, usuario, edital);
-        this.pdf = pdf;
     }
-
 
 }
