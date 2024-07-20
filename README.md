@@ -80,7 +80,7 @@ Exemplo: http://localhost:8081/upe
 Documentação: _HOST_/**swagger-ui/index.html** \
 Exemplo: http://localhost:8081/upe/swagger-ui/index.html
 
-Coleção Postman: [Endpoints (.json)](src/main/resources/collections_endpoints/UPE-Edital_v3.postman_collection.json).
+Coleção Postman: [Endpoints (.json)](src/main/resources/collections_endpoints/UPE-Edital_v4.postman_collection.json).
 
 ### Banco de dados
 
