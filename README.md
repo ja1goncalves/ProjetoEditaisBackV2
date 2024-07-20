@@ -57,6 +57,8 @@ spring.profiles.active=dev
 #spring.profiles.active=prd
 
 Ao executar para o ambiente de desenvolvimento é possível visualizar os dados do banco através da URL: http://localhost:8081/upe/h2/login.jsp
+- username: sa
+- Password: <VAZIO>
 
 Se for executado para o ambiente de produção (_spring.profiles.active=prd_) os dados presentes no arquivo _application-prd.properties_ deverá refletir o banco em produção.
 Por padrão está: \
@@ -64,6 +66,10 @@ Bando de dados: MySql \
 Schema: upe-edital \
 Usuário: root \
 Senha: root
+
+#### Execução do projeto
+
+Para executar a API localmente, após realizar as configurações acima mecionadas, é necessário executar/depurar a classe **EditalApplication.java** presente no diretório **br.com.vitrine.edital**.
 
 ### API
 
