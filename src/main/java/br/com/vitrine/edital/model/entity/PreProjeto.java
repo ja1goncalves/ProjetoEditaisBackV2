@@ -26,11 +26,11 @@ public class PreProjeto {
     private byte[] pdf;
 
     @ManyToOne
-    @JoinColumn(name = "usuario", nullable = false, referencedColumnName = "ID")
+    @JoinColumn(name = "ID_USUARIO", nullable = false, referencedColumnName = "ID")
     private Usuario usuario;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "edital", nullable = false, referencedColumnName = "ID")
+    @JoinColumn(name = "ID_EDITAL", nullable = false, referencedColumnName = "ID")
     private Edital edital;
 
     public PreProjeto(PreProjetoDTO preProjetoDTO, Usuario usuario, Edital edital) {

@@ -84,6 +84,11 @@ public class Edital {
         this.orgaoFomento = orgaoFomento;
     }
 
+    public Edital(EditalDTO editalDTO, Usuario usuario, OrgaoFomento orgaoFomento, byte[] pdf) {
+        this(editalDTO, usuario, orgaoFomento);
+        this.pdf = pdf;
+    }
+
     private boolean isValidString(String s) {
         return nonNull(s) && !s.isBlank();
     }

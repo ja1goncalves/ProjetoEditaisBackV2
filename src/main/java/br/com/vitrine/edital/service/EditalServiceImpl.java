@@ -10,12 +10,10 @@ import br.com.vitrine.edital.model.entity.OrgaoFomento;
 import br.com.vitrine.edital.model.entity.Usuario;
 import br.com.vitrine.edital.repository.EditalRepository;
 import br.com.vitrine.edital.repository.OrgaoFomentoRepository;
-import br.com.vitrine.edital.repository.PreProjetoRepository;
 import br.com.vitrine.edital.repository.UsuarioRepository;
 import br.com.vitrine.edital.service.interfaces.EditalService;
 import br.com.vitrine.edital.service.interfaces.UsuarioService;
 import br.com.vitrine.edital.utils.Utils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -51,7 +49,9 @@ public class EditalServiceImpl implements EditalService {
 
     @Override
     public EditalDTO create(EditalDTO editalDTO) {
-        validateEditalDTO(editalDTO, true);
+        validateEditalDTO(editalDTO);
+        validateNameEdital(editalDTO.getNome());
+
         Usuario usuario = getUsuarioOrThrow(editalDTO.getIdUsuario());
         OrgaoFomento orgaoFomento = getOrgaoFomentoOrThrow(editalDTO.getIdOrgaoFomento());
 
@@ -77,6 +77,7 @@ public class EditalServiceImpl implements EditalService {
         }
 
     }
+
     @Override
     public EditalDTO recover(Long idEdital) {
         Edital edital = getEditalOrThrow(idEdital);
@@ -91,11 +92,16 @@ public class EditalServiceImpl implements EditalService {
 
     @Override
     public EditalDTO update(EditalDTO editalDTO) {
-        validateEditalDTO(editalDTO, false);
+        validateEditalDTO(editalDTO);
         Usuario usuario = getUsuarioOrThrow(editalDTO.getIdUsuario());
         OrgaoFomento orgaoFomento = getOrgaoFomentoOrThrow(editalDTO.getIdOrgaoFomento());
 
-        editalRepository.save(new Edital(editalDTO, usuario, orgaoFomento));
+        Edital editalDaBase = getEditalOrThrow(editalDTO.getId());
+        if (!editalDTO.getNome().equalsIgnoreCase(editalDaBase.getNome())) {
+            validateNameEdital(editalDTO.getNome());
+        }
+
+        editalRepository.save(new Edital(editalDTO, usuario, orgaoFomento, editalDaBase.getPdf()));
         return editalDTO;
     }
 
@@ -106,10 +112,11 @@ public class EditalServiceImpl implements EditalService {
     }
 
     @Override
-    public List<EditalDTO> getAll() {return editalRepository.findAllByOrderByNomeAsc()
-            .stream()
-            .map(EditalDTO::new)
-            .collect(Collectors.toList());
+    public List<EditalDTO> getAll() {
+        return editalRepository.findAllByOrderByNomeAsc()
+                .stream()
+                .map(EditalDTO::new)
+                .collect(Collectors.toList());
 
     }
 
@@ -182,23 +189,13 @@ public class EditalServiceImpl implements EditalService {
                 .orElseThrow(() -> new NaoEncontradoException("Edital não encontrado: " + idEdital));
     }
 
-    private void validateEditalDTO(EditalDTO editalDTO, boolean isCreate) {
+    private void validateEditalDTO(EditalDTO editalDTO) {
         if (isNull(editalDTO)) {
             throw new DadoInvalidoException("Edital enviado para cadastro inválido");
         }
 
         if (!utils.isValidString(editalDTO.getNome()) || !utils.isValidString(editalDTO.getDataPublicacao())) {
             throw new DadoInvalidoException("Dados obrigatórios inválidos: Nome/Data Publicação");
-        }
-
-        if (isCreate) {
-            validateNameEdital(editalDTO.getNome());
-
-        } else {
-            Edital edital = getEditalOrThrow(editalDTO.getId());
-            if (!editalDTO.getNome().equalsIgnoreCase(edital.getNome())) {
-                validateNameEdital(editalDTO.getNome());
-            }
         }
     }
 
