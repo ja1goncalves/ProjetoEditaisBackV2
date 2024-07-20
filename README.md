@@ -58,7 +58,7 @@ spring.profiles.active=dev
 
 Ao executar para o ambiente de desenvolvimento é possível visualizar os dados do banco através da URL: http://localhost:8081/upe/h2/login.jsp
 - username: sa
-- Password: <VAZIO>
+- Password: <<VAZIO>>
 
 Se for executado para o ambiente de produção (_spring.profiles.active=prd_) os dados presentes no arquivo _application-prd.properties_ deverá refletir o banco em produção.
 Por padrão está: \
