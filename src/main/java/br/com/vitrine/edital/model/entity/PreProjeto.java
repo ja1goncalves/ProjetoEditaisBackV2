@@ -37,7 +37,17 @@ public class PreProjeto {
         this.id = preProjetoDTO.getId();
         this.usuario = usuario;
         this.edital = edital;
+    }
 
+    public PreProjeto(PreProjetoDTO preProjetoDTO, Usuario usuario, Edital edital, byte[] pdf) {
+        this(preProjetoDTO, usuario, edital);
+        this.pdf = pdf;
+    }
+
+    public PreProjeto(Usuario usuario, Edital edital, byte[] pdf) {
+        this.usuario = usuario;
+        this.edital = edital;
+        this.pdf = pdf;
     }
 
 }

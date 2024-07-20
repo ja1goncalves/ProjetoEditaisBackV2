@@ -2,17 +2,15 @@ package br.com.vitrine.edital.service;
 
 import br.com.vitrine.edital.exception.DadoInvalidoException;
 import br.com.vitrine.edital.exception.NaoEncontradoException;
-import br.com.vitrine.edital.model.dto.EditalDTO;
+import br.com.vitrine.edital.exception.RegistroExistenteException;
 import br.com.vitrine.edital.model.dto.PreProjetoDTO;
 import br.com.vitrine.edital.model.entity.Edital;
-import br.com.vitrine.edital.model.entity.OrgaoFomento;
 import br.com.vitrine.edital.model.entity.PreProjeto;
 import br.com.vitrine.edital.model.entity.Usuario;
 import br.com.vitrine.edital.repository.EditalRepository;
 import br.com.vitrine.edital.repository.PreProjetoRepository;
 import br.com.vitrine.edital.repository.UsuarioRepository;
 import br.com.vitrine.edital.service.interfaces.PreProjetoService;
-import br.com.vitrine.edital.utils.Utils;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -42,15 +40,61 @@ public class PreProjetoServiceImpl implements PreProjetoService {
     public PreProjetoDTO create(PreProjetoDTO preProjetoDTO) {
         Usuario usuario = getUsuarioOrThrow(preProjetoDTO.getIdUsuario());
         Edital edital = getEditalOrThrow(preProjetoDTO.getIdEdital());
+        validatePreProjetoByEditalAndUsuarioOrThrow(usuario, edital);
 
         preProjetoDTO.setId(null);
-        PreProjeto novoPreProjeto = new PreProjeto(preProjetoDTO, usuario, edital);
         long idCriado = preProjetoRepository.save(new PreProjeto(preProjetoDTO, usuario, edital)).getId();
         preProjetoDTO.setId(idCriado);
 
         return preProjetoDTO;
     }
 
+    @Override
+    public PreProjetoDTO inserirPdfPreProjetoByUsuarioAndEdital(
+            Long idUsuario,
+            Long idEdital,
+            MultipartFile pdf) {
+
+        try {
+            Usuario usuario = getUsuarioOrThrow(idUsuario);
+            Edital edital = getEditalOrThrow(idEdital);
+
+            validatePreProjetoByEditalAndUsuarioOrThrow(usuario, edital);
+            validarPdf(pdf);
+
+
+            long idCriado = preProjetoRepository.save(new PreProjeto(usuario, edital, pdf.getBytes())).getId();
+
+            return PreProjetoDTO.builder()
+                    .id(idCriado)
+                    .idEdital(idEdital)
+                    .idUsuario(idUsuario)
+                    .build();
+
+        } catch (IOException e) {
+            throw new DadoInvalidoException("Erro ao inserir o PDF. " + e.getMessage());
+        }
+    }
+
+    @Override
+    public List<PreProjetoDTO> obterPreprojetosPorUsuario(Long idUsuario) {
+        Usuario usuario = getUsuarioOrThrow(idUsuario);
+        return preProjetoRepository.findByUsuario(usuario)
+                .stream()
+                .map(PreProjetoDTO::new)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<PreProjetoDTO> obterPreprojetosPorEdital(Long idEdital) {
+        Edital edital = getEditalOrThrow(idEdital);
+        return preProjetoRepository.findByEdital(edital)
+                .stream()
+                .map(PreProjetoDTO::new)
+                .collect(Collectors.toList());
+    }
+
+    @Override
     public void inserirPdfPreProjeto(Long idPreProjeto, MultipartFile pdf) {
         try {
             validarPdf(pdf);
@@ -63,45 +107,58 @@ public class PreProjetoServiceImpl implements PreProjetoService {
         }
     }
 
+    @Override
+    public byte[] recoverPdf(Long idPreprojeto) {
+        PreProjeto preProjeto = getPreProjetoOrThrow(idPreprojeto);
+        return preProjeto.getPdf();
+    }
+
+    @Override
+    public byte[] recoverPdfByUsuarioAndEdital(Long idUsuario, Long idEdital) {
+        Edital edital = getEditalOrThrow(idEdital);
+        Usuario usuario = getUsuarioOrThrow(idUsuario);
+
+        PreProjeto preProjeto = getPreProjetoByEditalAndUsuarioOrThrow(usuario, edital);
+        return preProjeto.getPdf();
+    }
+
+    @Override
     public PreProjetoDTO recover(Long idPreProjeto) {
         PreProjeto preProjeto = getPreProjetoOrThrow(idPreProjeto);
         return new PreProjetoDTO(preProjeto);
     }
 
+    @Override
     public PreProjetoDTO update(PreProjetoDTO preProjetoDTO) {
+        PreProjeto preProjetoDaBase = getPreProjetoOrThrow(preProjetoDTO.getId());
         Edital edital = getEditalOrThrow(preProjetoDTO.getIdEdital());
         Usuario usuario = getUsuarioOrThrow(preProjetoDTO.getIdUsuario());
 
-        preProjetoRepository.save(new PreProjeto(preProjetoDTO,usuario,edital));
+        if (preProjetoDaBase.getUsuario().getId() != preProjetoDTO.getIdUsuario()
+                || preProjetoDaBase.getEdital().getId() != preProjetoDTO.getIdEdital()) {
+
+            validatePreProjetoByEditalAndUsuarioOrThrow(usuario, edital);
+        }
+
+
+        preProjetoRepository.save(new PreProjeto(preProjetoDTO, usuario, edital, preProjetoDaBase.getPdf()));
         return preProjetoDTO;
     }
 
+    @Override
     public void delete(Long idPreProjeto) {
         getPreProjetoOrThrow(idPreProjeto);
         preProjetoRepository.deleteById(idPreProjeto);
     }
 
+    @Override
     public List<PreProjetoDTO> getAll() {
-         return preProjetoRepository.findAll()
-                 .stream()
-                 .map(PreProjetoDTO::new)
-                 .collect(Collectors.toList());
-    }
-/*
-    public List<PreProjetoDTO> getAllByEdital(Long id_edital){
-        return preProjetoRepository.findByIdEdital(id_edital)
+        return preProjetoRepository.findAll()
                 .stream()
                 .map(PreProjetoDTO::new)
                 .collect(Collectors.toList());
     }
 
-    public List<PreProjetoDTO> findByIdUsuario(Long id_usuario){
-        return preProjetoRepository.findByIdUsuario(id_usuario)
-                .stream()
-                .map(PreProjetoDTO::new)
-                .collect(Collectors.toList());
-    }
-*/
     private Usuario getUsuarioOrThrow(long id) {
         return usuarioRepository
                 .findById(id)
@@ -118,6 +175,23 @@ public class PreProjetoServiceImpl implements PreProjetoService {
         return preProjetoRepository
                 .findById(id)
                 .orElseThrow(() -> new NaoEncontradoException("Pré Projeto não encontrado: " + id));
+    }
+
+    private PreProjeto getPreProjetoByEditalAndUsuarioOrThrow(Usuario usuario, Edital edital) {
+        return preProjetoRepository
+                .findByEditalAndUsuario(edital, usuario)
+                .orElseThrow(() -> new NaoEncontradoException(
+                        "Pré Projeto não encontrado. Usuário: " + usuario.getId()
+                                + " - Edital: " + edital.getId()));
+    }
+
+    private void validatePreProjetoByEditalAndUsuarioOrThrow(Usuario usuario, Edital edital) {
+        preProjetoRepository
+                .findByEditalAndUsuario(edital, usuario)
+                .ifPresent(__ -> {
+                    throw new RegistroExistenteException(
+                            String.format("Edital %s já possui Pré-Projeto para o usuário %s.", edital.getId(), usuario.getId()));
+                });
     }
 
     private void validarPdf(MultipartFile logo) throws IOException {

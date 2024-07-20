@@ -169,7 +169,6 @@ public class EditalController {
             @ApiResponse(responseCode = "200", content = {@Content(array = @ArraySchema(schema = @Schema(implementation = UsuarioDTO.class)))}),
             @ApiResponse(responseCode = "404", content = {@Content(schema = @Schema(implementation = ResponseExceptionDTO.class), mediaType = "application/json")}),
             @ApiResponse(responseCode = "500", content = {@Content(schema = @Schema(implementation = ResponseExceptionDTO.class), mediaType = "application/json")})})
-    //@PostMapping(value = "/{idEdital}/usuario/{idUsuario}/favoritar")
     @GetMapping("/{idEdital}/usuarios-que-favoritaram")
     public ResponseEntity<Set<UsuarioDTO>> getUsuariosQueFavoritaram(@PathVariable Long idEdital) {
         Set<UsuarioDTO> usuarios = editalService.getUsuariosQueFavoritaram(idEdital);
