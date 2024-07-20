@@ -1,21 +1,20 @@
 package br.com.vitrine.edital.repository;
 
+import br.com.vitrine.edital.model.entity.Edital;
 import br.com.vitrine.edital.model.entity.PreProjeto;
+import br.com.vitrine.edital.model.entity.Usuario;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface PreProjetoRepository extends JpaRepository<PreProjeto, Long> {
 
-    ///Optional<PreProjeto> findByIdUsuario(usuario.get);
+    Optional<PreProjeto> findByEditalAndUsuario(Edital edital, Usuario usuario);
 
-   // Optional<PreProjeto> findByIdEdital(Long idEdital);
+    List<PreProjeto> findByEdital(Edital edital);
 
-    /*
-    @Query("SELECT e FROM PreProjeto e WHERE e.usuario.id IN :ids ORDER BY LOWER(e.nome) ASC")
-    List<PreProjeto> findByUsers(@Param("ids") List<Long> ids);
-    */
+    List<PreProjeto> findByUsuario(Usuario usuario);
+
 }
 
-//List<PreProjetoDTO> getAllByEdital(Long id_edital);
-//List<PreProjetoDTO> findByIdUsuario(Long id_usuario);
