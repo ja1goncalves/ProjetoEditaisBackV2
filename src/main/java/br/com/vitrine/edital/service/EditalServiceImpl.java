@@ -101,7 +101,8 @@ public class EditalServiceImpl implements EditalService {
             validateNameEdital(editalDTO.getNome());
         }
 
-        editalRepository.save(new Edital(editalDTO, usuario, orgaoFomento, editalDaBase.getPdf()));
+        editalDaBase.atualizarEntidade(editalDTO, usuario, orgaoFomento);
+        editalRepository.save(editalDaBase);
         return editalDTO;
     }
 

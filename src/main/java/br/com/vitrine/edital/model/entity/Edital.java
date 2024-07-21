@@ -84,6 +84,19 @@ public class Edital {
         this.orgaoFomento = orgaoFomento;
     }
 
+    public void atualizarEntidade(EditalDTO editalDTO, Usuario usuario, OrgaoFomento orgaoFomento) {
+        this.setNome(editalDTO.getNome());
+        this.setCategoria(editalDTO.getCategoria());
+        this.setPublicoAlvo(editalDTO.getPublicoAlvo());
+        this.setArea(editalDTO.getArea());
+        this.setDataPublicacao(isValidString(editalDTO.getDataPublicacao()) ? DataUtils.obterLocalDateTime(editalDTO.getDataPublicacao()) : null);
+        this.setDataInicial(isValidString(editalDTO.getDataInicial()) ? DataUtils.obterLocalDateTime(editalDTO.getDataInicial()) : null);
+        this.setDataFinal(isValidString(editalDTO.getDataFinal()) ? DataUtils.obterLocalDateTime(editalDTO.getDataFinal()) : null);
+        this.setResultado(editalDTO.getResultado());
+        this.setUsuario(usuario);
+        this.setOrgaoFomento(orgaoFomento);
+    }
+
     public Edital(EditalDTO editalDTO, Usuario usuario, OrgaoFomento orgaoFomento, byte[] pdf) {
         this(editalDTO, usuario, orgaoFomento);
         this.pdf = pdf;
