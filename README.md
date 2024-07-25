@@ -89,3 +89,7 @@ Nome do schema do banco de dados: **upe-edital**.
 Diagrama Entidade Relacionamento:
 
 <img src="src/main/resources/db/DER_v2.png" alt="Modelo DER">
+
+### Logs
+
+O log da API pode ser encontrado na pasta raiz do projeto no caminho: /logs/editalws.log
