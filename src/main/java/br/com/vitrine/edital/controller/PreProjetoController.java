@@ -28,7 +28,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.List;
 
 @Slf4j
-@Tag(name = "PreProjeto", description = "Gerenciamento de Pré-Projetos")
+@Tag(name = "Pré-Projeto", description = "Gerenciamento de Pré-Projetos")
 @RestController
 @RequestMapping(path = "/preprojeto")
 public class PreProjetoController {
