@@ -39,7 +39,7 @@ public class UsuarioServiceImpl implements UsuarioService {
     }
 
     @Override
-    public UsuarioDTO create(UsuarioDTO usuarioDTO) {
+    public Usuario create(UsuarioDTO usuarioDTO) {
         if (isNull(usuarioDTO)) {
             throw new DadoInvalidoException("Usuário enviado para cadastro inválido");
         }
@@ -52,10 +52,10 @@ public class UsuarioServiceImpl implements UsuarioService {
 
         usuarioDTO.setId(null);
         usuarioDTO.setSenha(passwordUtils.encriptar(usuarioDTO.getSenha()));
-        long idCriado = saveOrUpdate(usuarioDTO).getId();
-        usuarioDTO.setId(idCriado);
+        Usuario usuario = saveOrUpdate(usuarioDTO);
+        usuarioDTO.setId(usuario.getId());
 
-        return usuarioDTO;
+        return usuario;
     }
 
     @Override

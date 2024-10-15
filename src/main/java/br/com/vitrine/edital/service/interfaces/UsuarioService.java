@@ -3,13 +3,14 @@ package br.com.vitrine.edital.service.interfaces;
 import br.com.vitrine.edital.model.dto.CredencialDTO;
 import br.com.vitrine.edital.model.dto.EditalDTO;
 import br.com.vitrine.edital.model.dto.UsuarioDTO;
+import br.com.vitrine.edital.model.entity.Usuario;
 
 import java.util.List;
 import java.util.Set;
 
 public interface UsuarioService {
 
-    UsuarioDTO create(UsuarioDTO usuarioDTO);
+    Usuario create(UsuarioDTO usuarioDTO);
 
     UsuarioDTO recoverById(Long idUsuario);
 

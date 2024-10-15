@@ -29,9 +29,10 @@ public class DBService {
     public void criarPerfis() {
         if (perfilRepository.findAll().isEmpty()) {
             Perfil perfil1 = Perfil.builder().descricao("Admin").build();
-            Perfil perfil2 = Perfil.builder().descricao("Outros").build();
+            Perfil perfil2 = Perfil.builder().descricao("Empresa").build();
+            Perfil perfil3 = Perfil.builder().descricao("Outros").build();
 
-            perfilRepository.saveAll(Arrays.asList(perfil1, perfil2));
+            perfilRepository.saveAll(Arrays.asList(perfil1, perfil2, perfil3));
         }
     }
 
