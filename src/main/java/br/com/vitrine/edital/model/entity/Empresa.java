@@ -3,7 +3,6 @@ package br.com.vitrine.edital.model.entity;
 
 
 import br.com.vitrine.edital.model.dto.EmpresaDTO;
-import br.com.vitrine.edital.model.dto.PerfilDTO;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -36,9 +35,10 @@ public class Empresa{
     @JoinColumn(name = "usuarioId", referencedColumnName = "id")
     private Usuario usuario;
 	
-	public Empresa(EmpresaDTO empresaDTO) {
+	public Empresa(EmpresaDTO empresaDTO, Usuario usuario) {
         this.id = empresaDTO.getId();
         this.cnpj = empresaDTO.getCnpj();
         this.nomeFantasia = empresaDTO.getNomeFantasia();
+        this.usuario = usuario;
     }
 }

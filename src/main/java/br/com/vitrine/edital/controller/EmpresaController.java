@@ -1,10 +1,9 @@
 package br.com.vitrine.edital.controller;
 
 import br.com.vitrine.edital.model.dto.EmpresaDTO;
-import br.com.vitrine.edital.model.dto.OrgaoFomentoDTO;
 import br.com.vitrine.edital.model.dto.ResponseExceptionDTO;
 import br.com.vitrine.edital.model.entity.Empresa;
-import br.com.vitrine.edital.service.EmpresaService;
+import br.com.vitrine.edital.service.interfaces.EmpresaService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -31,15 +30,15 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(path = "/empresas")
 public class EmpresaController {
     private final EmpresaService empresaService;
-    EmpresaController(EmpresaService empresaService ){
+    EmpresaController(EmpresaService empresaService){
         this.empresaService = empresaService;
     }
     
 
     // Endpoint para criar ou atualizar uma empresa
     @PostMapping
-    public ResponseEntity<Empresa> createOrUpdateEmpresa(@RequestBody Empresa empresa) {
-        Empresa savedEmpresa = empresaService.saveEmpresa(empresa);
+    public ResponseEntity<EmpresaDTO> createOrUpdateEmpresa(@RequestBody EmpresaDTO empresa) {
+        EmpresaDTO savedEmpresa = empresaService.saveEmpresa(empresa);
         return ResponseEntity.ok(savedEmpresa);
     }
 

@@ -42,9 +42,10 @@ public class UsuarioController {
             @ApiResponse(responseCode = "500", content = {@Content(schema = @Schema(implementation = ResponseExceptionDTO.class), mediaType = "application/json")})})
     @PostMapping
     public ResponseEntity<UsuarioDTO> create(@RequestBody UsuarioDTO usuarioDTO) {
+
         return ResponseEntity
                 .status(HttpStatus.CREATED)
-                .body(usuarioService.create(usuarioDTO));
+                .body(new UsuarioDTO(usuarioService.create(usuarioDTO)));
 
     }
 

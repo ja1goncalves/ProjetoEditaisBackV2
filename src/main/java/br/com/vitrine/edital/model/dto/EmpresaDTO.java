@@ -22,17 +22,17 @@ import lombok.ToString;
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class EmpresaDTO {
 	private static final long serialVersionUID = -836520936464130360L;
+
+	@EqualsAndHashCode.Include
 	private Long id;
 	private String nomeFantasia;
 	private String cnpj;
-	private Long idUsuario;
+	private UsuarioDTO usuario;
 	
-	
-	
-	private void EmpresaDTO(Empresa empresa) {
+	public EmpresaDTO(Empresa empresa) {
 		this.id = empresa.getId();
 		this.nomeFantasia = empresa.getNomeFantasia();
 		this.cnpj = empresa.getCnpj();
-		this.idUsuario =  empresa.getUsuario().getId();
+		this.usuario = new UsuarioDTO(empresa.getUsuario());
 	}
 }
